@@ -20,7 +20,7 @@ while running:
     # Triangle Obstacle for level 1
     pygame.draw.line(screen, (0, 0, 0), (200, 150), (250, 200), 4)
     pygame.draw.line(screen, (0, 0, 0), (250, 200), (300, 150), 4)
-    pygame.draw.line(screen, (0, 0, 0), (200, 150), (250, 150), 4)
+    pygame.draw.line(screen, (0, 0, 0), (200, 150), (300, 150), 4)
 
     pygame.display.flip()
 
