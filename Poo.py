@@ -1,14 +1,19 @@
 #Imports
 import pygame
+import time
 pygame.init()
 
 #Make Screen
 screen = pygame.display.set_mode([500, 500])
+clock = pygame.time.Clock()
+FPS = 50
 
 #Make ball
 ball = pygame.image.load("ball.png")
 ball = pygame.transform.scale(ball, (14, 14))
 ballrect = ball.get_rect()
+speed = 5
+yspeed = 1
 
 
 
@@ -20,18 +25,27 @@ pygame.display.set_icon(icon)
 def createHole(x, y):
     pygame.draw.circle(screen, (10, 10, 10), (x, y), 10)
 
-def move(x, y):
-    ballrect.move_ip(x, y)
-move(50, 50)
-print(ball.get_rect())
-print(ballrect)
+def move(speedx, speedy, slow, window):
+    while speedx > 0:
+        ballrect.move_ip(1, 0)
+        speedx -= slow
+
+   
+    
+     
+ballrect.move_ip(250, 50)
+
 
 def level1():
     screen.fill((0, 0, 150))    
-
+    global speed
     # Border for level 1
     grass = pygame.draw.rect(screen, (0, 160, 0), [100, 25, 300, 425], 0)
-    border = pygame.draw.rect(screen, (0, 0, 0), [100, 25, 300, 425], 4)
+    border = pygame.draw.rect(screen, (0, 0, 0), [96, 21, 304, 429], 6)
+    if grass.contains(ballrect) == False:
+        speed = -speed
+    move(5, 0, 5, grass)
+    
     #print(ball.get_rect())
     #print(grass.contains(ball.get_rect()))
     #print(border.contains(ballrect))
@@ -53,17 +67,20 @@ def level1():
 
 running = True
 while running:
+    time.sleep(0.2)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    
-    screen.fill((0, 160, 0))
+    pygame.display.update()
+    clock.tick(FPS)
+    pygame.display.flip()
+
+
     level1()
     screen.blit(ball, ballrect)
     
     
 
-    pygame.display.flip()
 
 
 #def swing():
