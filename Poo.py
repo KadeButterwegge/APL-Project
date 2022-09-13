@@ -12,8 +12,8 @@ FPS = 50
 ball = pygame.image.load("ball.png")
 ball = pygame.transform.scale(ball, (14, 14))
 ballrect = ball.get_rect()
-xspeed = 2
-yspeed = 2
+xspeed = 13
+yspeed = 13
 
 
 
@@ -26,7 +26,20 @@ def createHole(x, y):
     pygame.draw.circle(screen, (10, 10, 10), (x, y), 10)
 
 def move(speedx, speedy, slow, window):
+    global xspeed
+    global yspeed
     ballrect.move_ip(xspeed, yspeed)
+    if xspeed>0:
+        xspeed -= slow
+    if xspeed<0:
+        xspeed += slow
+    if yspeed>0:
+        yspeed -= slow
+    if yspeed<0:
+        yspeed += slow
+
+
+
 
    
     
@@ -57,9 +70,6 @@ def level1():
     Wall4 = pygame.draw.rect(screen, (0, 0, 0), [400, 25, 5, 430], 0)
     XObj.append(Wall4)
 
-    Wall5 = pygame.draw.rect(screen, (0, 0, 0), [200, 200, 100, 5], 0)
-    YObj.append(Wall5)
-
     for thing in YObj:
         if ballrect.colliderect(thing):
             yspeed = -yspeed
@@ -68,7 +78,8 @@ def level1():
         if ballrect.colliderect(thing):
             xspeed = -xspeed
 
-    move(xspeed, yspeed, 0, screen)
+    
+
 
     createHole(250, 85)
 
@@ -82,13 +93,10 @@ while running:
     clock.tick(FPS)
     pygame.display.flip()
 
-
+    
     level1()
+    
     screen.blit(ball, ballrect)
-    
-    
-
-
 
 #def swing():
     
