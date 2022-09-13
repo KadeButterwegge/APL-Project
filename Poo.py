@@ -37,31 +37,31 @@ ballrect.move_ip(250, 50)
 
 
 def level1():
+    YObj = []
+    XObj = []
+
     screen.fill((0, 0, 150))    
     global speed
     # Border for level 1
     grass = pygame.draw.rect(screen, (0, 160, 0), [100, 25, 300, 425], 0)
-    border = pygame.draw.rect(screen, (0, 0, 0), [96, 21, 304, 429], 6)
+    #border = pygame.draw.rect(screen, (0, 0, 0), [96, 21, 304, 429], 6)
+    Wall1 = pygame.draw.rect(screen, (0, 0, 0), [100, 25, 300, 5], 0)
+    YObj.append(Wall1)
+
+    Wall2 = pygame.draw.rect(screen, (0, 0, 0), [100, 25, 5, 425], 0)
+    XObj.append(Wall2)
+
+    Wall3 = pygame.draw.rect(screen, (0, 0, 0), [100, 450, 300, 5], 0)
+    YObj.append(Wall3)
+
+    Wall4 = pygame.draw.rect(screen, (0, 0, 0), [400, 25, 5, 430], 0)
+    XObj.append(Wall4)
+
     if grass.contains(ballrect) == False:
         speed = -speed
     move(5, 0, 5, grass)
-    
-    #print(ball.get_rect())
-    #print(grass.contains(ball.get_rect()))
-    #print(border.contains(ballrect))
 
-    # Triangle Obstacle for level 1
-    #pygame.draw.line(screen, (0, 0, 0), (175, 150), (250, 200), 4)
-    #pygame.draw.line(screen, (0, 0, 0), (250, 200), (325, 150), 4)
-    #pygame.draw.line(screen, (0, 0, 0), (175, 150), (325, 150), 4)
 
-    # Left Side Triange for level 1
-    #pygame.draw.line(screen, (0, 0, 0), (100, 300), (175, 250), 4)
-    #pygame.draw.line(screen, (0, 0, 0), (100, 100), (175, 250), 4)
-
-    # Right Side Triangle for level 1
-    #pygame.draw.line(screen, (0, 0, 0), (400, 300), (325, 250), 4)
-    #pygame.draw.line(screen, (0, 0, 0), (400, 100), (325, 250), 4)
 
     createHole(250, 85)
 
