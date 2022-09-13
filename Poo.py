@@ -12,8 +12,8 @@ FPS = 50
 ball = pygame.image.load("ball.png")
 ball = pygame.transform.scale(ball, (14, 14))
 ballrect = ball.get_rect()
-speed = 5
-yspeed = 1
+xspeed = 2
+yspeed = 2
 
 
 
@@ -26,9 +26,7 @@ def createHole(x, y):
     pygame.draw.circle(screen, (10, 10, 10), (x, y), 10)
 
 def move(speedx, speedy, slow, window):
-    while speedx > 0:
-        ballrect.move_ip(1, 0)
-        speedx -= slow
+    ballrect.move_ip(xspeed, yspeed)
 
    
     
@@ -37,6 +35,8 @@ ballrect.move_ip(250, 50)
 
 
 def level1():
+    global xspeed
+    global yspeed
     YObj = []
     XObj = []
 
@@ -57,17 +57,24 @@ def level1():
     Wall4 = pygame.draw.rect(screen, (0, 0, 0), [400, 25, 5, 430], 0)
     XObj.append(Wall4)
 
-    if grass.contains(ballrect) == False:
-        speed = -speed
-    move(5, 0, 5, grass)
+    Wall5 = pygame.draw.rect(screen, (0, 0, 0), [200, 200, 100, 5], 0)
+    YObj.append(Wall5)
 
+    for thing in YObj:
+        if ballrect.colliderect(thing):
+            yspeed = -yspeed
+    
+    for thing in XObj:
+        if ballrect.colliderect(thing):
+            xspeed = -xspeed
 
+    move(xspeed, yspeed, 0, screen)
 
     createHole(250, 85)
 
 running = True
 while running:
-    time.sleep(0.2)
+    time.sleep(0.01)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
