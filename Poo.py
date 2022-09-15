@@ -12,8 +12,8 @@ FPS = 50
 ball = pygame.image.load("ball.png")
 ball = pygame.transform.scale(ball, (14, 14))
 ballrect = ball.get_rect()
-xspeed = 13
-yspeed = 13
+xspeed = 0
+yspeed = 0
 
 
 
@@ -41,10 +41,9 @@ def move(speedx, speedy, slow, window):
 
 
 
-   
-    
-     
 ballrect.move_ip(250, 50)
+     
+
 
 
 def level1():
@@ -83,8 +82,8 @@ def level1():
     createHole(250, 85)
 
 running = True
+doodoo = True
 while running:
-    doodoo = True
     time.sleep(0.01)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -94,26 +93,30 @@ while running:
     pygame.display.flip()
 
     level1()
-    #move(xspeed, yspeed, 0.05, screen)
+    screen.blit(ball, ballrect)
     
-    clickBall = False
+    clickedBall = False
     if event.type == pygame.MOUSEBUTTONDOWN:
         if event.button == 1:
             xMouse = event.pos[0]
             yMouse = event.pos[1]
-            if ballrect.collidepoint(xMouse, yMouse):
-                print("clicked ball")
-                startPos = [xMouse, yMouse]
-                clickBall = True
-    if event.type == pygame.MOUSEBUTTONUP and doodoo == True:
-        print("up")
-        doodoo = False
-        #endPos = [event.pos[0], event.pos[1]]
-        #move(abs(startPos[0]-endPos[0]), abs(startPos[1]-endPos[1]), 0.05, screen)
+            startPos = [xMouse, yMouse]
+    elif event.type == pygame.MOUSEBUTTONUP and ballrect.collidepoint(startPos[0], startPos[1]):
+        print("released")
+        endPos = [event.pos[0], event.pos[1]]
+        xspeed = startPos[0]-endPos[0]/10
+        yspeed = startPos[1]-endPos[1]/10
+        if xspeed > 14:
+            xspeed = 14
+        if yspeed > 14:
+            yspeed = 14
+        move(xspeed, yspeed, 0.05, screen)
+
+        clickBall = False
+
             
 
 
-    screen.blit(ball, ballrect)
 
 #def swing():
     
