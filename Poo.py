@@ -84,6 +84,7 @@ def level1():
 
 running = True
 while running:
+    doodoo = True
     time.sleep(0.01)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -92,9 +93,26 @@ while running:
     clock.tick(FPS)
     pygame.display.flip()
 
-    
     level1()
+    #move(xspeed, yspeed, 0.05, screen)
     
+    clickBall = False
+    if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.button == 1:
+            xMouse = event.pos[0]
+            yMouse = event.pos[1]
+            if ballrect.collidepoint(xMouse, yMouse):
+                print("clicked ball")
+                startPos = [xMouse, yMouse]
+                clickBall = True
+    if event.type == pygame.MOUSEBUTTONUP and doodoo == True:
+        print("up")
+        doodoo = False
+        #endPos = [event.pos[0], event.pos[1]]
+        #move(abs(startPos[0]-endPos[0]), abs(startPos[1]-endPos[1]), 0.05, screen)
+            
+
+
     screen.blit(ball, ballrect)
 
 #def swing():
