@@ -53,11 +53,10 @@ def level1():
     YObj = []
     XObj = []
 
-    screen.fill((0, 0, 150))    
-    global speed
+    screen.fill((0, 0, 150))
     # Border for level 1
     grass = pygame.draw.rect(screen, (0, 160, 0), [100, 25, 300, 425], 0)
-    #border = pygame.draw.rect(screen, (0, 0, 0), [96, 21, 304, 429], 6)
+   
     Wall1 = pygame.draw.rect(screen, (0, 0, 0), [100, 25, 300, 5], 0)
     YObj.append(Wall1)
 
