@@ -83,8 +83,8 @@ def level1():
     createHole(250, 85)
 
 running = True
+strokes = 8
 while running:
-    doodoo = True
     time.sleep(0.01)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -105,9 +105,9 @@ while running:
                 print("clicked ball")
                 startPos = [xMouse, yMouse]
                 clickBall = True
-    if event.type == pygame.MOUSEBUTTONUP and doodoo == True:
+    if event.type == pygame.MOUSEBUTTONUP and strokes > 0:
         print("up")
-        doodoo = False
+        strokes-= 1
         #endPos = [event.pos[0], event.pos[1]]
         #move(abs(startPos[0]-endPos[0]), abs(startPos[1]-endPos[1]), 0.05, screen)
             
