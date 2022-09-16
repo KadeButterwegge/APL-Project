@@ -85,7 +85,6 @@ def level1():
     createHole(250, 85)
 
 running = True
-doodoo = True
 while running:
     time.sleep(0.01)
     for event in pygame.event.get():
@@ -116,6 +115,7 @@ while running:
         move(xspeed, yspeed, 0.05, screen)
 
         clickBall = False
+
 
             
 
