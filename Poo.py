@@ -28,18 +28,10 @@ def createHole(x, y):
 def move(speedx, speedy, slow, window):
     global xspeed
     global yspeed
-    moving = True
-    while moving:
-        
-        ballrect.move_ip(xspeed, yspeed)
-        if xspeed>0:
-            xspeed -= slow
-        elif xspeed<0:
-            xspeed += slow
-        if yspeed>0:
-            yspeed -= slow
-        elif yspeed<0:
-            yspeed += slow
+    #moving = True
+    ballrect.move_ip(xspeed, yspeed)
+
+
 
 
 
