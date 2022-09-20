@@ -15,7 +15,8 @@ ballrect = ball.get_rect()
 xspeed = 0
 yspeed = 0
 
-
+YObj = []
+XObj = []
 
 #Icon and Caption
 pygame.display.set_caption("Mini Golf")
@@ -28,9 +29,17 @@ def createHole(x, y):
 def move(speedx, speedy, slow, window):
     global xspeed
     global yspeed
-    #moving = True
+    global YObj
+    global XObj
+    xspeed = speedx
+    yspeed = speedy
+    #print(xspeed)
+    #print(yspeed)
     ballrect.move_ip(xspeed, yspeed)
+    pygame.display.update()
+    print("poop")
 
+    
 
 
 
@@ -44,8 +53,9 @@ ballrect.move_ip(250, 50)
 def level1():
     global xspeed
     global yspeed
-    YObj = []
-    XObj = []
+    global XObj
+    global YObj
+
 
     screen.fill((0, 0, 150))
     # Border for level 1
@@ -63,17 +73,6 @@ def level1():
     Wall4 = pygame.draw.rect(screen, (0, 0, 0), [400, 25, 5, 430], 0)
     XObj.append(Wall4)
 
-    for thing in YObj:
-        if ballrect.colliderect(thing):
-            yspeed = -yspeed
-    
-    for thing in XObj:
-        if ballrect.colliderect(thing):
-            xspeed = -xspeed
-
-    
-
-
     createHole(250, 85)
 
 running = True
@@ -89,24 +88,44 @@ while running:
     level1()
     screen.blit(ball, ballrect)
     
-    clickedBall = False
+    flag = True
+
+    clickedBall = True
     if event.type == pygame.MOUSEBUTTONDOWN:
         if event.button == 1:
             xMouse = event.pos[0]
             yMouse = event.pos[1]
             startPos = [xMouse, yMouse]
-    elif event.type == pygame.MOUSEBUTTONUP and ballrect.collidepoint(startPos[0], startPos[1]):
+    elif event.type == pygame.MOUSEBUTTONUP and clickedBall:
+        #ballrect.collidepoint(startPos[0], startPos[1])
         print("released")
         endPos = [event.pos[0], event.pos[1]]
         xspeed = startPos[0]-endPos[0]/10
         yspeed = startPos[1]-endPos[1]/10
-        if xspeed > 14:
-            xspeed = 14
-        if yspeed > 14:
-            yspeed = 14
-        move(xspeed, yspeed, 0.05, screen)
+        if xspeed > 10:
+            xspeed = 10
+        if yspeed > 10:
+            yspeed = 10
+
+        for thing in YObj:
+            if ballrect.colliderect(thing):
+                yspeed = -yspeed
+
+        for thing in XObj:
+            if ballrect.colliderect(thing):
+                xspeed = -xspeed
+        
+        move(xspeed, yspeed, 0.1, screen)
 
         clickBall = False
+        #while xspeed > 0 or yspeed > 0:
+            #xspeed -= .1
+            #yspeed -= .1
+            #time.sleep(.05)
+            #move(xspeed, yspeed, .1, screen)
+    else:
+        print("no")
+
 
 
             
