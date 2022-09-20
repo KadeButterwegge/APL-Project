@@ -90,15 +90,14 @@ while running:
     
     flag = True
 
-    clickedBall = True
+    clickedBall = False
     if event.type == pygame.MOUSEBUTTONDOWN:
         if event.button == 1:
             xMouse = event.pos[0]
             yMouse = event.pos[1]
             startPos = [xMouse, yMouse]
-    elif event.type == pygame.MOUSEBUTTONUP and clickedBall:
-        #ballrect.collidepoint(startPos[0], startPos[1])
-        print("released")
+            
+    elif event.type == pygame.MOUSEBUTTONUP and ballrect.collidepoint(startPos[0], startPos[1]):
         endPos = [event.pos[0], event.pos[1]]
         xspeed = startPos[0]-endPos[0]/10
         yspeed = startPos[1]-endPos[1]/10
@@ -115,16 +114,13 @@ while running:
             if ballrect.colliderect(thing):
                 xspeed = -xspeed
         
-        move(xspeed, yspeed, 0.1, screen)
 
         clickBall = False
-        #while xspeed > 0 or yspeed > 0:
-            #xspeed -= .1
-            #yspeed -= .1
-            #time.sleep(.05)
-            #move(xspeed, yspeed, .1, screen)
-    else:
-        print("no")
+        while xspeed > 0 or yspeed > 0:
+            xspeed -= .1
+            yspeed -= .1
+            time.sleep(.05)
+            move(xspeed, yspeed, .1, screen)
 
 
 
