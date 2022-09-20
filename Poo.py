@@ -36,8 +36,15 @@ def move(speedx, speedy, slow, window):
     #print(xspeed)
     #print(yspeed)
     ballrect.move_ip(xspeed, yspeed)
-    pygame.display.update()
-    print("poop")
+    if xspeed>0:
+        xspeed -= slow
+    if xspeed<0:
+        xspeed += slow
+    if yspeed>0:
+        yspeed -= slow
+    if yspeed<0:
+        yspeed += slow
+
 
     
 
@@ -98,6 +105,7 @@ while running:
             startPos = [xMouse, yMouse]
             
     elif event.type == pygame.MOUSEBUTTONUP and ballrect.collidepoint(startPos[0], startPos[1]):
+        print("released")
         endPos = [event.pos[0], event.pos[1]]
         xspeed = startPos[0]-endPos[0]/10
         yspeed = startPos[1]-endPos[1]/10
@@ -116,19 +124,7 @@ while running:
         
 
         clickBall = False
-        while xspeed > 0 or yspeed > 0:
-            xspeed -= .1
-            yspeed -= .1
-            time.sleep(.05)
-            move(xspeed, yspeed, .1, screen)
 
-
-
-            
-
-
-
-#def swing():
     
     
 
