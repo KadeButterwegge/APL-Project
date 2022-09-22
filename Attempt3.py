@@ -13,8 +13,6 @@ ball = pygame.image.load("ball.png")
 ball = pygame.transform.scale(ball, (14, 14))
 ballrect = ball.get_rect()
 
-#asdf
-
 #Icon and Caption
 pygame.display.set_caption("Mini Golf")
 icon = pygame.image.load('Logo.png')
