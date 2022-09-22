@@ -26,32 +26,6 @@ levelRects = []
 def createHole(x, y):
     pygame.draw.circle(screen, (10, 10, 10), (x, y), 10)
 
-def move(xspeed, yspeed, friction, window):
-    global level
-    global levelRects
-    moveX = xspeed
-    moveY = yspeed
-    for rectx in levelRects[level-1][0]:
-        if ballrect.colliderect(rectx):
-            moveY = -moveY
-    for recty in levelRects[level-1][1]:
-        if ballrect.colliderect(recty):
-            moveX = -moveX
-    while xspeed > 0 or yspeed > 0:
-        ballrect.move_ip(moveX, moveY)
-        pygame.display.update()
-        if xspeed > 0:
-            xspeed -= friction
-        if yspeed > 0:
-            yspeed -= friction
-        if xspeed < 0:
-            xspeed += friction
-        if yspeed < 0:
-            yspeed += friction
-        if xspeed > -0.5 and xspeed < 0.5:
-            xspeed = 0
-        if yspeed > -0.5 and yspeed < 0.5:
-            yspeed = 0
         
 
 ballrect.move_ip(250, 50)
@@ -107,8 +81,8 @@ while running:
     elif event.type == pygame.MOUSEBUTTONUP and ballrect.collidepoint(startPos[0], startPos[1]):
         endPos = [event.pos[0], event.pos[1]]
         print(endPos)
-        xspeed = (startPos[0]-endPos[0])/1.5
-        yspeed = (startPos[1]-endPos[1])/1.5
+        xspeed = (startPos[0]-endPos[0])/3
+        yspeed = (startPos[1]-endPos[1])/3
         print(xspeed)
         print(yspeed)
         if xspeed > 14:
@@ -120,7 +94,30 @@ while running:
         if yspeed < -14:
             yspeed = -14
 
-        move(xspeed, yspeed, 0.5, screen)
+        friction = 0.5
+
+        for rectx in levelRects[level-1][0]:
+            if ballrect.colliderect(rectx):
+                yspeed = -yspeed
+        for recty in levelRects[level-1][1]:
+            if ballrect.colliderect(recty):
+                xspeed = -xspeed
+        while abs(xspeed) > 0 or abs(yspeed) > 0:
+            time.sleep(0.1)
+            ballrect.move_ip(xspeed, yspeed)
+            pygame.display.update()
+            if xspeed > 0:
+                xspeed -= friction
+            if yspeed > 0:
+                yspeed -= friction
+            if xspeed < 0:
+                xspeed += friction
+            if yspeed < 0:
+                yspeed += friction
+            if xspeed > -0.5 and xspeed < 0.5:
+                xspeed = 0
+            if yspeed > -0.5 and yspeed < 0.5:
+                yspeed = 0
     #screen.blit(ball, ballrect)
 
 
