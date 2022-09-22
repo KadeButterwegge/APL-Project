@@ -27,6 +27,8 @@ def createHole(x, y):
     pygame.draw.circle(screen, (10, 10, 10), (x, y), 10)
 
 def move(speedx, speedy, slow, window):
+    ballrect.move_ip(speedx, speedy)
+    pygame.display.update()
     global xspeed
     global yspeed
     global YObj
@@ -96,15 +98,11 @@ while running:
     level1()
     screen.blit(ball, ballrect)
     
-    flag = True
-
-    clickedBall = False
     if event.type == pygame.MOUSEBUTTONDOWN:
         if event.button == 1:
             xMouse = event.pos[0]
             yMouse = event.pos[1]
             startPos = [xMouse, yMouse]
-            
     elif event.type == pygame.MOUSEBUTTONUP and ballrect.collidepoint(startPos[0], startPos[1]):
         print("released")
         endPos = [event.pos[0], event.pos[1]]
@@ -122,9 +120,6 @@ while running:
         for thing in XObj:
             if ballrect.colliderect(thing):
                 xspeed = -xspeed
-        
-
-        clickBall = False
 
     
     
