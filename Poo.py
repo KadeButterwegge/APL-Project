@@ -29,6 +29,24 @@ def createHole(x, y):
 def move(speedx, speedy, slow, window):
     ballrect.move_ip(speedx, speedy)
     pygame.display.update()
+    global xspeed
+    global yspeed
+    global YObj
+    global XObj
+    xspeed = speedx
+    yspeed = speedy
+    #print(xspeed)
+    #print(yspeed)
+    ballrect.move_ip(xspeed, yspeed)
+    if xspeed>0:
+        xspeed -= slow
+    if xspeed<0:
+        xspeed += slow
+    if yspeed>0:
+        yspeed -= slow
+    if yspeed<0:
+        yspeed += slow
+
 
     
 
@@ -101,21 +119,7 @@ while running:
         for thing in XObj:
             if ballrect.colliderect(thing):
                 xspeed = -xspeed
-        
-        #move(xspeed, yspeed, 0.1, screen)
-        #while xspeed > 0 or yspeed > 0:
-            #xspeed -= .1
-            #yspeed -= .1
-            #time.sleep(.05)
-            #move(xspeed, yspeed, .1, screen)
 
-
-
-            
-
-
-
-#def swing():
     
     
 
