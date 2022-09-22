@@ -77,14 +77,10 @@ while running:
             xMouse = event.pos[0]
             yMouse = event.pos[1]
             startPos = [xMouse, yMouse]
-            print(startPos)
     elif event.type == pygame.MOUSEBUTTONUP and ballrect.collidepoint(startPos[0], startPos[1]):
         endPos = [event.pos[0], event.pos[1]]
-        print(endPos)
         xspeed = (startPos[0]-endPos[0])/3
         yspeed = (startPos[1]-endPos[1])/3
-        print(xspeed)
-        print(yspeed)
         if xspeed > 14:
             xspeed = 14
         if yspeed > 14:
@@ -103,9 +99,10 @@ while running:
             if ballrect.colliderect(recty):
                 xspeed = -xspeed
         while abs(xspeed) > 0 or abs(yspeed) > 0:
-            time.sleep(0.1)
+            time.sleep(0.05)
             ballrect.move_ip(xspeed, yspeed)
-            pygame.display.update()
+            print(pygame.display.update())
+            #print("dung")
             if xspeed > 0:
                 xspeed -= friction
             if yspeed > 0:
