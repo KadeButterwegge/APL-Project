@@ -22,8 +22,6 @@ pygame.display.set_icon(icon)
 #Level layouts
 level = 1
 levelRects = []
-level1Rects = []
-level1Rects.append(levelRects)
 
 def createHole(x, y):
     pygame.draw.circle(screen, (10, 10, 10), (x, y), 10)
@@ -33,14 +31,15 @@ def move(xspeed, yspeed, friction, window):
     global levelRects
     moveX = xspeed
     moveY = yspeed
-    for rectx in levelRects[level-1, 0]:
+    for rectx in levelRects[level-1][0]:
         if ballrect.colliderect(rectx):
             moveY = -moveY
-    for recty in levelRects[level-1, 1]:
+    for recty in levelRects[level-1][1]:
         if ballrect.colliderect(recty):
             moveX = -moveX
     while xspeed > 0 or yspeed > 0:
         ballrect.move_ip(moveX, moveY)
+        pygame.display.update()
         if xspeed > 0:
             xspeed -= friction
         if yspeed > 0:
@@ -58,6 +57,7 @@ def move(xspeed, yspeed, friction, window):
 ballrect.move_ip(250, 50)
 
 def level1():
+    global levelRects
     screen.fill((0, 0, 150))
     # Border for level 1
     Xobj = []
@@ -77,8 +77,10 @@ def level1():
     Wall4 = pygame.draw.rect(screen, (0, 0, 0), [400, 25, 5, 430], 0)
     Xobj.append(Wall4)
 
-    Xobj.append(levelRects[0])
-    Yobj.append(levelRects[0])
+    level1Rects = []
+    level1Rects.append(Xobj)
+    level1Rects.append(Yobj)
+    levelRects.append(level1Rects)
 
     screen.blit(ball, ballrect)
     

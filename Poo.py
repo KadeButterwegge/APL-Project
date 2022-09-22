@@ -38,6 +38,7 @@ def move(speedx, speedy, slow, window):
     #print(xspeed)
     #print(yspeed)
     ballrect.move_ip(xspeed, yspeed)
+    pygame.display.update()
     if xspeed>0:
         xspeed -= slow
     if xspeed<0:
