@@ -67,10 +67,11 @@ def level1():
     Xobj.append(Wall4)
 
     # 2D array containging vertical and horizontal rectangles lists
-    level1Rects = []
-    level1Rects.append(Xobj)
-    level1Rects.append(Yobj)
-    levelRects.append(level1Rects)
+    if len(levelRects) <= level-1:
+        level1Rects = []
+        level1Rects.append(Xobj)
+        level1Rects.append(Yobj)
+        levelRects.append(level1Rects)
     
     # Place hole on screen
     holerect.update((250, 50), (20, 20))
@@ -157,7 +158,6 @@ while running:
                     xspeed = -xspeed
             for recty in levelRects[level-1][1]:
                 if ballrect.colliderect(recty):
-                    
                     yspeed = -yspeed
             #Slow down the ball
             if xspeed > 0:
@@ -182,12 +182,10 @@ while running:
             elif holerect.contains(ballrect) and abs(xspeed) > 4 and abs(yspeed) > 4:
                 xspeed = random.randint(math.floor(-abs(xspeed)), math.floor(abs(xspeed)))
                 yspeed = random.randint(math.floor(-abs(yspeed)), math.floor(abs(yspeed)))
-                print("changed")
             ballrect.move_ip(xspeed, yspeed)
 
     #except:
         poo = 123123123123123
 
 #
-
 pygame.quit()
