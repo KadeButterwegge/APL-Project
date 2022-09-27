@@ -13,6 +13,11 @@ ball = pygame.image.load("ball.png")
 ball = pygame.transform.scale(ball, (14, 14))
 ballrect = ball.get_rect()
 
+#Hole setup
+hole = pygame.image.load("Golf Hole.png")
+hole = pygame.transform.scale(hole, (17, 17))
+holerect = hole.get_rect()
+
 #Icon and Caption
 pygame.display.set_caption("Mini Golf")
 icon = pygame.image.load('Logo.png')
@@ -24,8 +29,8 @@ levelRects = []
 levelMethods = []
 
 
-def createHole(x, y):
-    pygame.draw.circle(screen, (10, 10, 10), (x, y), 10)
+
+
 
         
 
@@ -66,7 +71,7 @@ def level1():
     screen.blit(ball, ballrect)
     
     # 
-    createHole(250, 85)
+    screen.blit(hole, holerect)
 
 levelMethods.append(level1)
 
