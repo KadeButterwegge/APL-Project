@@ -15,8 +15,9 @@ ballrect = ball.get_rect()
 
 #Hole setup
 hole = pygame.image.load("Golf Hole.png")
-hole = pygame.transform.scale(hole, (17, 17))
+hole = pygame.transform.scale(hole, (22, 22))
 holerect = hole.get_rect()
+holerect.move_ip(100, 100)
 
 #Icon and Caption
 pygame.display.set_caption("Mini Golf")
@@ -66,12 +67,14 @@ def level1():
     level1Rects.append(Xobj)
     level1Rects.append(Yobj)
     levelRects.append(level1Rects)
+    
+    # Place hole on screen
+    holerect.update((250, 50), (20, 20))
+    screen.blit(hole, holerect)
 
     # Start position for the ball
     screen.blit(ball, ballrect)
-    
-    # 
-    screen.blit(hole, holerect)
+
 
 levelMethods.append(level1)
 
