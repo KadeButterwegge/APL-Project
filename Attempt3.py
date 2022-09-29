@@ -18,7 +18,7 @@ friction = 0.93
 
 #Hole setup
 hole = pygame.image.load("Golf Hole.png")
-hole = pygame.transform.scale(hole, (22, 22))
+hole = pygame.transform.scale(hole, (25, 25))
 holerect = hole.get_rect()
 holerect.move_ip(100, 100)
 
@@ -74,7 +74,7 @@ def level1():
         levelRects.append(level1Rects)
     
     # Place hole on screen
-    holerect.update((250, 50), (20, 20))
+    holerect.update((250, 50), (30, 30))
     screen.blit(hole, holerect)
 
     # Start position for the ball
@@ -173,13 +173,13 @@ while running:
             if yspeed > -0.5 and yspeed < 0.5:
                 yspeed = 0
             #Check for hole collision
-            if holerect.contains(ballrect) and abs(xspeed) < 4 and abs(yspeed) < 4:
+            if holerect.contains(ballrect) and abs(xspeed) < 5 and abs(yspeed) < 5:
                 xspeed = 0
                 yspeed = 0
                 setPos = True
                 ballrect.update((250, 350), (14, 14))
                 level += 1
-            elif holerect.contains(ballrect) and abs(xspeed) > 4 and abs(yspeed) > 4:
+            elif holerect.contains(ballrect) and abs(xspeed) > 5 and abs(yspeed) > 5:
                 xspeed = random.randint(math.floor(-abs(xspeed)), math.floor(abs(xspeed)))
                 yspeed = random.randint(math.floor(-abs(yspeed)), math.floor(abs(yspeed)))
             ballrect.move_ip(xspeed, yspeed)
