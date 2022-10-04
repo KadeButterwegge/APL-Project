@@ -33,10 +33,6 @@ level = 1
 levelRects = []
 levelMethods = []
 
-
-
-
-
         
 
 ballrect.update((250, 350), (14, 14))
