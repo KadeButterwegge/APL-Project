@@ -20,7 +20,6 @@ friction = 0.93
 hole = pygame.image.load("Golf Hole.png")
 hole = pygame.transform.scale(hole, (25, 25))
 holerect = hole.get_rect()
-holerect.move_ip(100, 100)
 
 #Icon and Caption
 pygame.display.set_caption("Mini Golf")
@@ -125,66 +124,68 @@ while running:
     clock.tick(FPS)
     pygame.display.flip()
     levelMethods[level-1]()
-    #try:
-    if event.type == pygame.MOUSEBUTTONDOWN:
-        if event.button == 1:
-            xMouse = event.pos[0]
-            yMouse = event.pos[1]
-            startPos = [xMouse, yMouse]
-    elif event.type == pygame.MOUSEBUTTONUP and ballrect.collidepoint(startPos[0], startPos[1]):
-        endPos = [event.pos[0], event.pos[1]]
-        xspeed = (startPos[0]-endPos[0])/3
-        yspeed = (startPos[1]-endPos[1])/3
-        if xspeed > 14:
-            xspeed = 14
-        if yspeed > 14:
-            yspeed = 14
-        if xspeed < -14:
-            xspeed = -14
-        if yspeed < -14:
-            yspeed = -14
+    try:
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                xMouse = event.pos[0]
+                yMouse = event.pos[1]
+                startPos = [xMouse, yMouse]
+        elif event.type == pygame.MOUSEBUTTONUP and ballrect.collidepoint(startPos[0], startPos[1]):
+            endPos = [event.pos[0], event.pos[1]]
+            xspeed = (startPos[0]-endPos[0])/3
+            yspeed = (startPos[1]-endPos[1])/3
+            if xspeed > 14:
+                xspeed = 14
+            if yspeed > 14:
+                yspeed = 14
+            if xspeed < -14:
+                xspeed = -14
+            if yspeed < -14:
+                yspeed = -14
 
-        while abs(xspeed) > 0 or abs(yspeed) > 0:
-            time.sleep(.016)
-            #Draw new ball position
-            screen.blit(ball, ballrect)
-            #Draw level
-            levelMethods[level-1]()
-            pygame.display.flip()
+            while abs(xspeed) > 0 or abs(yspeed) > 0:
+                time.sleep(.016)
+                #Draw new ball position
+                screen.blit(ball, ballrect)
+                #Draw level
+                levelMethods[level-1]()
+                pygame.display.flip()
 
-            #Check for wall collisions
-            for rectx in levelRects[level-1][0]:
-                if ballrect.colliderect(rectx):
-                    xspeed = -xspeed
-            for recty in levelRects[level-1][1]:
-                if ballrect.colliderect(recty):
-                    yspeed = -yspeed
-            #Slow down the ball
-            if xspeed > 0:
-                xspeed *= friction
-            if yspeed > 0:
-                yspeed *= friction
-            if xspeed < 0:
-                xspeed *= friction
-            if yspeed < 0:
-                yspeed *= friction
-            if xspeed > -0.5 and xspeed < 0.5:
-                xspeed = 0
-            if yspeed > -0.5 and yspeed < 0.5:
-                yspeed = 0
-            #Check for hole collision
-            if holerect.contains(ballrect) and abs(xspeed) < 5 and abs(yspeed) < 5:
-                xspeed = 0
-                yspeed = 0
-                setPos = True
-                ballrect.update((250, 350), (14, 14))
-                level += 1
-            elif holerect.contains(ballrect) and abs(xspeed) > 5 and abs(yspeed) > 5:
-                xspeed = random.randint(math.floor(-abs(xspeed)), math.floor(abs(xspeed)))
-                yspeed = random.randint(math.floor(-abs(yspeed)), math.floor(abs(yspeed)))
-            ballrect.move_ip(xspeed, yspeed)
 
-    #except:
+                #Check for wall collisions
+                for rectx in levelRects[level-1][0]:
+                    if ballrect.colliderect(rectx):
+                        xspeed = -xspeed
+                for recty in levelRects[level-1][1]:
+                    if ballrect.colliderect(recty):
+                        yspeed = -yspeed
+                #Slow down the ball
+                if xspeed > 0:
+                    xspeed *= friction
+                if yspeed > 0:
+                    yspeed *= friction
+                if xspeed < 0:
+                    xspeed *= friction
+                if yspeed < 0:
+                    yspeed *= friction
+                if xspeed > -0.5 and xspeed < 0.5:
+                    xspeed = 0
+                if yspeed > -0.5 and yspeed < 0.5:
+                    yspeed = 0
+                #Check for hole collision
+                if holerect.contains(ballrect) and abs(xspeed) < 4 and abs(yspeed) < 4:
+                    xspeed = 0
+                    yspeed = 0
+                    setPos = True
+                    ballrect.update((250, 350), (14, 14))
+                    if level < len(levelMethods):
+                        level += 1
+                elif holerect.contains(ballrect) and abs(xspeed) > 4 and abs(yspeed) > 4:
+                    xspeed = random.randint(math.floor(-abs(xspeed)), math.floor(abs(xspeed)))
+                    yspeed = random.randint(math.floor(-abs(yspeed)), math.floor(abs(yspeed)))
+                ballrect.move_ip(xspeed, yspeed)
+
+    except:
         poo = 123123123123123
 
 #
