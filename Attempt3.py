@@ -86,12 +86,51 @@ def level2():
     # Lists for horizontal and vertical rectangles
     Xobj2 = []
     Yobj2 = []
+
+    # Ground
+    grass = pygame.draw.rect(screen, (0, 160, 0), [50, 25, 400, 180], 0)
+    grass2 = pygame.draw.rect(screen, (0, 160, 0), [188, 175, 133, 300])
+    water = pygame.draw.rect(screen, (0, 0, 150), [130, 80, 245, 70], 0)
+
     # Width for the border
     width = 6
+
+    top_wall = pygame.draw.rect(screen, (0, 0, 0), [50, 25, 400, width], 0)
+    Yobj2.append(top_wall)
+
+    top_left = pygame.draw.rect(screen, (0, 0, 0), [50, 25, width, 180], 0)
+    Xobj2.append(top_left)
+
+    mid_left = pygame.draw.rect(screen, (0, 0, 0), [50, 205, 138, width], 0)
+    Yobj2.append(mid_left)
+
+    top_right = pygame.draw.rect(screen, (0, 0, 0), [450, 25, width, 180], 0)
+    Xobj2.append(top_right)
+
+    mid_right = pygame.draw.rect(screen, (0, 0, 0), [326, 205, 130, width], 0)
+    Yobj2.append(mid_right)
+
+    bot_left = pygame.draw.rect(screen, (0, 0, 0), [188, 205, width, 270], 0)
+    Xobj2.append(bot_left)
+
+    bot_right = pygame.draw.rect(screen, (0, 0, 0), [321, 205, width, 270], 0)
+    Xobj2.append(bot_right)
+
+    bot_wall = pygame.draw.rect(screen, (0, 0, 0), [188, 475, 139, width], 0)
+    Yobj2.append(bot_wall)
+
+    top_obs = pygame.draw.rect(screen, (0, 0, 0), [125, 75, 250, width], 0)
+    Yobj2.append(top_obs)
+
+    bot_obs = pygame.draw.rect(screen, (0, 0, 0), [125, 150, 250, width], 0)
+    Yobj2.append(bot_obs)
+
+    left_obs = pygame.draw.rect(screen, (0, 0, 0), [125, 75, width, 75], 0)
+    Xobj2.append(left_obs)
     
-    # Ground
-    grass = pygame.draw.rect(screen, (0, 160, 0), [100, 25, 300, 425], 0)
-   
+    right_obs = pygame.draw.rect(screen, (0, 0, 0), [375, 75, width, 81], 0)
+    Xobj2.append(right_obs)
+
     # Border rectangles
 
     # 2D array containging vertical and horizontal rectangles lists
@@ -101,7 +140,7 @@ def level2():
     levelRects.append(level2Rects)
     
     # Place hole on screen
-    holerect.update((250, 50), (20, 20))
+    holerect.update((250, 40), (30, 30))
     screen.blit(hole, holerect)
 
     # Start position for the ball
