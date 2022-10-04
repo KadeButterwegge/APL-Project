@@ -21,6 +21,7 @@ hole = pygame.image.load("Golf Hole.png")
 hole = pygame.transform.scale(hole, (22, 22))
 holerect = hole.get_rect()
 
+
 #Icon and Caption
 pygame.display.set_caption("Mini Golf")
 icon = pygame.image.load('Logo.png')
