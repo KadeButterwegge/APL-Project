@@ -14,7 +14,6 @@ FPS = 50
 ball = pygame.image.load("ball.png")
 ball = pygame.transform.scale(ball, (14, 14))
 ballrect = ball.get_rect()
-friction = 0.93
 
 #Hole setup
 hole = pygame.image.load("Golf Hole.png")
@@ -33,6 +32,11 @@ level = 1
 levelRects = []
 levelMethods = []
 
+#Terrain frictions
+grassFric = 0.93
+roughFric = 0.65
+smoothFric = 0.99
+boostFric = 1.2
         
 
 ballrect.update((250, 350), (14, 14))
@@ -43,11 +47,15 @@ def level1():
     # Lists for horizontal and vertical rectangles
     Xobj = []
     Yobj = []
+    terrain = []
+    terFric = []
     # Width for the border
     width = 6
     
-    # Ground
+    # Terrain
     grass = pygame.draw.rect(screen, (0, 160, 0), [100, 25, 300, 425], 0)
+    terrain.append(grass)
+    terFric.append(grassFric)
    
     # Border rectangles
     Wall1 = pygame.draw.rect(screen, (0, 0, 0), [100, 25, 300, width], 0)
@@ -83,15 +91,21 @@ def level2():
     # Lists for horizontal and vertical rectangles
     Xobj2 = []
     Yobj2 = []
+    terrain2 = []
+    terFric2 = []
 
-    # Ground
+    # Terrain
     grass = pygame.draw.rect(screen, (0, 160, 0), [50, 25, 400, 180], 0)
+    terrain2.append(grass)
     grass2 = pygame.draw.rect(screen, (0, 160, 0), [188, 175, 133, 300])
+    terrain2.append(grass)
     water = pygame.draw.rect(screen, (0, 0, 150), [130, 80, 245, 70], 0)
+    
 
     # Width for the border
     width = 6
 
+    # Border rectangles
     top_wall = pygame.draw.rect(screen, (0, 0, 0), [50, 25, 400, width], 0)
     Yobj2.append(top_wall)
 
@@ -128,13 +142,46 @@ def level2():
     right_obs = pygame.draw.rect(screen, (0, 0, 0), [375, 75, width, 81], 0)
     Xobj2.append(right_obs)
 
-    # Border rectangles
-
     # 2D array containging vertical and horizontal rectangles lists
     level2Rects = []
     level2Rects.append(Xobj2)
     level2Rects.append(Yobj2)
     levelRects.append(level2Rects)
+    
+    # Place hole on screen
+    holerect.update((250, 40), (30, 30))
+    screen.blit(hole, holerect)
+
+    # Start position for the ball
+    if setPos:
+        ballrect.update((250, 400), (14, 14))
+        setPos = False
+    screen.blit(ball, ballrect)
+
+def level3():
+    global levelRects
+    global setPos
+    screen.fill((0, 0, 150))
+    # Lists for horizontal and vertical rectangles
+    Xobj3 = []
+    Yobj3 = []
+    terrain = []
+    terFric = []
+
+    # Terrain
+    grass = pygame.draw.rect(screen, (0, 160, 0), [100, 25, 300, 425], 0)
+    terrain.append(grass)
+    
+    # Width for the border
+    width = 6
+
+    # Border rectangles
+
+    # 2D array containging vertical and horizontal rectangles lists
+    level3Rects = []
+    level3Rects.append(Xobj3)
+    level3Rects.append(Yobj3)
+    levelRects.append(level3Rects)
     
     # Place hole on screen
     holerect.update((250, 40), (30, 30))
