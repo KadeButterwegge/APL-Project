@@ -83,6 +83,7 @@ def level1():
 
     # Start position for the ball
     screen.blit(ball, ballrect)
+    print("poo")
 
 def level2():
     global levelRects
