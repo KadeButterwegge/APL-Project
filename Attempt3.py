@@ -16,6 +16,7 @@ ball = pygame.transform.scale(ball, (14, 14))
 ballrect = ball.get_rect()
 friction = 0.93
 
+
 #Hole setup
 hole = pygame.image.load("Golf Hole.png")
 hole = pygame.transform.scale(hole, (22, 22))
@@ -36,11 +37,13 @@ levelMethods = []
 #Level colors
 borderCol = (0, 0, 0)
 grassCol = (0, 150, 0)
+boostCol = (90, 0, 90)
+slowCol = (160, 10, 15)
 
 #Terrain frictions
 grassFric = 0.93
 boostFric = 1.05
-roughFric = 0.67
+slowFric = 0.89
 iceFric = .999999
 
         
@@ -50,11 +53,15 @@ ballrect.update((250, 350), (14, 14))
 def level1():
     global levelRects
     screen.fill((0, 0, 150))
+    #Ball starting position
+
+
     # Lists for horizontal and vertical rectangles
     Xobj = []
     Yobj = []
     terrain = []
     terFric = []
+
     # Width for the border
     width = 6
     
@@ -96,6 +103,8 @@ def level2():
     global levelRects
     global setPos
     screen.fill((0, 0, 150))
+    #Ball starting position
+
     # Lists for horizontal and vertical rectangles
     Xobj = []
     Yobj = []
@@ -167,18 +176,21 @@ def level2():
 
     # Start position for the ball
     if setPos:
-        ballrect.update((250, 400), (30, 30))
+        ballrect.update((250, 400), (14, 14))
         setPos = False
     screen.blit(ball, ballrect)
 
 def level3():
     global levelRects
+    global setPos
     screen.fill((0, 0, 150))
-    # Lists for horizontal and vertical rectangles
+
+    # Lists for horizontal rectangles, vertical rectangles, and terrain
     Xobj = []
     Yobj = []
     terrain = []
-    terFric = []
+    terFric = [] #Contains the friction multiplier for each terrain rectangle
+
     # Width for the border
     width = 6
     
@@ -215,6 +227,22 @@ def level3():
     obsB = pygame.draw.rect(screen, borderCol, [122, 235, 266, width])
     Yobj.append(obsB)
 
+    boost1 = pygame.draw.rect(screen, boostCol, [165, 56, 185, 59])
+    terrain.append(boost1)
+    terFric.append(boostFric)
+
+    boost2 = pygame.draw.rect(screen, boostCol, [388, 120, 62, 115])
+    terrain.append(boost2)
+    terFric.append(boostFric)
+
+    slow1 = pygame.draw.rect(screen, slowCol, [56, 135, 66, 85])
+    terrain.append(slow1)
+    terFric.append(slowFric)
+
+    slow2 = pygame.draw.rect(screen, slowCol, [150, 241, 80, 59])
+    terrain.append(slow2)
+    terFric.append(slowFric)
+
     # 2D array containging vertical and horizontal rectangles lists
     if len(levelRects) <= level-1:
         level3Rects = []
@@ -225,10 +253,13 @@ def level3():
         levelRects.append(level3Rects)
     
     # Place hole on screen
-    #holerect.update((250, 50), (30, 30))
-    #screen.blit(hole, holerect)
+    holerect.update((75, 70), (30, 30))
+    screen.blit(hole, holerect)
 
     # Start position for the ball
+    if setPos:
+        ballrect.update((270, 262), (14, 14))
+        setPos = False
     screen.blit(ball, ballrect)
 
 
@@ -280,12 +311,10 @@ while running:
                         xspeed = -xspeed
                 for recty in levelRects[level-1][1]:
                     if ballrect.colliderect(recty):
-                        yspeed = -yspeed                        
-                index = 0
+                        yspeed = -yspeed
                 for rect in levelRects[level-1][2]:
                     if rect.contains(ballrect):
-                        friction = levelRects[level-1][3][index]
-                        index += 1
+                        friction = levelRects[level-1][3][levelRects[level-1][2].index(rect)]
                 #Slow down the ball
                 if xspeed > 0:
                     xspeed *= friction
@@ -299,12 +328,20 @@ while running:
                     xspeed = 0
                 if yspeed > -0.5 and yspeed < 0.5:
                     yspeed = 0
+                if xspeed > 14:
+                    xspeed = 14
+                if yspeed > 14:
+                    yspeed = 14
+                if xspeed < -14:
+                    xspeed = -14
+                if yspeed < -14:
+                    yspeed = -14
+                
                 #Check for hole collision
                 if holerect.contains(ballrect) and abs(xspeed) < 4 and abs(yspeed) < 4:
                     xspeed = 0
                     yspeed = 0
                     setPos = True
-                    ballrect.update((250, 350), (14, 14))
                     if level < len(levelMethods):
                         level += 1
                 elif holerect.contains(ballrect) and abs(xspeed) > 4 and abs(yspeed) > 4:
