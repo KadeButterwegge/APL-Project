@@ -30,7 +30,7 @@ pygame.display.set_icon(icon)
 
 #Level layouts
 setPos = True
-level = 3
+level = 1
 levelRects = []
 levelMethods = []
 
