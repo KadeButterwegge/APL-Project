@@ -310,6 +310,47 @@ def level4():
     Yobj.append(top)
     YBounce.append(pinkBounce)
 
+    botL = pygame.draw.rect(screen, borderCol, [25, 430, 100, width])
+    Yobj.append(botL)
+    YBounce.append(borBounce)
+
+    midL = pygame.draw.rect(screen, borderCol, [119, 175, width, 255])
+    Xobj.append(midL)
+    XBounce.append(borBounce)
+
+    midLT = pygame.draw.rect(screen, borderCol, [119, 25, width, 56])
+    Xobj.append(midLT)
+    XBounce.append(borBounce)
+
+    topR = pygame.draw.rect(screen, borderCol, [125, 75, 350, width])
+    Yobj.append(topR)
+    YBounce.append(borBounce)
+
+    right = pygame.draw.rect(screen, bounceCol, [469, 81, width, 94])
+    Xobj.append(right)
+    XBounce.append(pinkBounce)
+
+    midTL = pygame.draw.rect(screen, borderCol, [125, 175, 200, width])
+    Yobj.append(midTL)
+    XBounce.append(borBounce)
+
+    midTR = pygame.draw.rect(screen, borderCol, [425, 175, 50, width])
+    Yobj.append(midTR)
+    YBounce.append(borBounce)
+
+    midRT = pygame.draw.rect(screen, borderCol, [319, 181, width, 119])
+    Xobj.append(midRT)
+    XBounce.append(midRT)
+
+    mid3 = pygame.draw.rect(screen, borderCol, [175, 294, 150, width])
+    Yobj.append(mid3)
+    YBounce.append(borBounce)
+
+    mid = pygame.draw.rect(screen, borderCol, [169, 294, width, 106])
+    Xobj.append(mid)
+    XBounce.append(borBounce)
+
+
 
     # Other walls
     # 2D array containging vertical and horizontal rectangles lists
