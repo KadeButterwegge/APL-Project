@@ -17,6 +17,7 @@ ballrect = ball.get_rect()
 friction = 0.93
 ballrect.update((250, 350), (14, 14))
 maxSpeed = 15
+strokes = 0
 
 
 #Hole setup
@@ -32,7 +33,7 @@ pygame.display.set_icon(icon)
 
 #Level layouts
 setPos = True
-level = 4
+level = 5
 levelRects = []
 levelMethods = []
 
@@ -42,12 +43,14 @@ grassCol = (0, 150, 0)
 boostCol = (90, 0, 90)
 slowCol = (160, 10, 15)
 bounceCol = (240, 120, 240)
+iceCol = (125, 225, 240)
+bridgeCol = (120, 80, 40)
 
 #Terrain frictions
 grassFric = 0.93
 boostFric = 1.05
 slowFric = 0.89
-iceFric = .999999
+iceFric = .9899999
 bounceFric = -1.5
 
 #Wall bounce
@@ -289,13 +292,25 @@ def level4():
     terrain.append(grass)
     terFric.append(grassFric)
 
+    ice = pygame.draw.rect(screen, iceCol, [25, 81, 94, 175], 0)
+    terrain.append(ice)
+    terFric.append(iceFric)
+
     grass2 = pygame.draw.rect(screen, grassCol, [125, 75, 350, 100])
     terrain.append(grass2)
     terFric.append(grassFric)
 
+    ice2 = pygame.draw.rect(screen, iceCol, [275, 75, 150, 100], 0)
+    terrain.append(ice2)
+    terFric.append(iceFric)
+
     grass3 = pygame.draw.rect(screen, grassCol, [325, 175, 100, 300])
     terrain.append(grass3)
     terFric.append(grassFric)
+
+    ice3 = pygame.draw.rect(screen, iceCol, [300, 300, 125, 100])
+    terrain.append(ice3)
+    terFric.append(iceFric)
 
     grass4 = pygame.draw.rect(screen, grassCol, [175, 300, 150, 100])
     terrain.append(grass4)
@@ -350,7 +365,21 @@ def level4():
     Xobj.append(mid)
     XBounce.append(borBounce)
 
+    midB = pygame.draw.rect(screen, borderCol, [169, 400, 156, width])
+    Yobj.append(midB)
+    YBounce.append(borBounce)
 
+    bot = pygame.draw.rect(screen, bounceCol, [319, 475, 106, width])
+    Yobj.append(bot)
+    YBounce.append(pinkBounce)
+
+    midR = pygame.draw.rect(screen, borderCol, [319, 400, width, 81])
+    Xobj.append(midR)
+    XBounce.append(borBounce)
+
+    right = pygame.draw.rect(screen, borderCol, [425, 175, width, 306])
+    Xobj.append(right)
+    XBounce.append(borBounce)
 
     # Other walls
     # 2D array containging vertical and horizontal rectangles lists
@@ -365,24 +394,125 @@ def level4():
         levelRects.append(level4Rects)
     
     # Place hole on screen
-    # holerect.update((250, 50), (30, 30))
-    # screen.blit(hole, holerect)
+    holerect.update((213, 337), (30, 30))
+    screen.blit(hole, holerect)
 
     # Start position for the ball
-        if setPos:
-            ballrect.update((68, 370), (14, 14))
-            setPos = False
+    if setPos:
+        ballrect.update((68, 370), (14, 14))
+        setPos = False
     screen.blit(ball, ballrect)
+
+def level5():
+    global levelRects
+    global setPos
+    global strokes
+    screen.fill((0, 0, 150))
+
+    # Lists for horizontal and vertical rectangles
+    Xobj = []
+    Yobj = []
+    XBounce = []
+    YBounce = []
+    terrain = []
+    terFric = []
+
+    # Width for the border
+    width = 6
+    
+    # Ground
+    grass = pygame.draw.rect(screen, grassCol, [50, 196, 125, 125])
+    terrain.append(grass)
+    terFric.append(grassFric)
+
+    bridge = pygame.draw.rect(screen, bridgeCol, [175, 216, 150, 85])
+    terrain.append(bridge)
+    terFric.append(grassFric)
+
+    grass2 = pygame.draw.rect(screen, grassCol, [325, 196, 125, 125])
+    terrain.append(grass2)
+    terFric.append(grassFric)
+   
+    # Border rectangles
+    top1 = pygame.draw.rect(screen, borderCol, [44, 190, 137, width])
+    Yobj.append(top1)
+    YBounce.append(borBounce)
+
+    top2 = pygame.draw.rect(screen, borderCol, [319, 190, 137, width])
+    Yobj.append(top2)
+    YBounce.append(borBounce)
+
+    left = pygame.draw.rect(screen, borderCol, [44, 190, width, 137])
+    Xobj.append(left)
+    XBounce.append(borBounce)
+
+    right = pygame.draw.rect(screen, borderCol, [450, 190, width, 137])
+    Xobj.append(right)
+    XBounce.append(borBounce)
+
+    topr = pygame.draw.rect(screen, borderCol, [175, 190, width, 25])
+    Xobj.append(topr)
+    XBounce.append(borBounce)
+
+    topl = pygame.draw.rect(screen, borderCol, [319, 190, width, 25])
+    Xobj.append(topl)
+    XBounce.append(borBounce)
+
+    botr = pygame.draw.rect(screen, borderCol, [175, 301, width, 25])
+    Xobj.append(botr)
+    XBounce.append(borBounce)
+
+    botl = pygame.draw.rect(screen, borderCol, [319, 301, width, 25])
+    Xobj.append(botl)
+    XBounce.append(borBounce)
+
+    toprcap = pygame.draw.rect(screen, borderCol, [175, 215, 6, 1])
+    Yobj.append(toprcap)
+    YBounce.append(toprcap)
+
+    bot = pygame.draw.rect(screen, borderCol, [44, 321, 137, width])
+    Yobj.append(bot)
+    YBounce.append(borBounce)
+
+    bot2 = pygame.draw.rect(screen, borderCol, [319, 321, 137, width])
+    Yobj.append(bot2)
+    YBounce.append(borBounce)
+
+    # 2D array containging vertical and horizontal rectangles lists
+    if len(levelRects) <= level-1:
+        level5Rects = []
+        level5Rects.append(Xobj)
+        level5Rects.append(Yobj)
+        level5Rects.append(terrain)
+        level5Rects.append(terFric)
+        level5Rects.append(XBounce)
+        level5Rects.append(YBounce)
+        levelRects.append(level5Rects)
+    
+    # Place hole on screen
+    #holerect.update((250, 50), (30, 30))
+    #screen.blit(hole, holerect)
+
+    # Stroke counter
+    '''font = pygame.font.SysFont('arial', 20)
+    text = font.render(str("strokes: " + str(strokes)), True, (0, 0, 0))
+    screen.blit(text, (100, 100))'''
+
+    # Start position for the ball
+    if setPos:
+        ballrect.update((0, 0), (14, 14))
+        setPos = False
+
 
 levelMethods.append(level1)
 levelMethods.append(level2)
 levelMethods.append(level3)
 levelMethods.append(level4)
+levelMethods.append(level5)
 
 running = True
 doodoo = True
 while running:
-    
     time.sleep(0.01)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -435,26 +565,26 @@ while running:
                     if rect.contains(ballrect):
                         friction = levelRects[level-1][3][levelRects[level-1][2].index(rect)]
                 #Slow down the ball
-                if xspeed > 0:
+                if abs(xspeed) > 0:
                     xspeed *= friction
-                if yspeed > 0:
+                if abs(yspeed) > 0:
                     yspeed *= friction
-                if xspeed < 0:
-                    xspeed *= friction
-                if yspeed < 0:
-                    yspeed *= friction
+
+                #Stops ball
                 if xspeed > -0.1 and xspeed < 0.1:
                     xspeed = 0
                 if yspeed > -0.1 and yspeed < 0.1:
                     yspeed = 0
+                
+                #Caps out the speed
                 if xspeed > maxSpeed:
-                    xspeed = 14
+                    xspeed = maxSpeed
                 if yspeed > maxSpeed:
-                    yspeed = 14
+                    yspeed = maxSpeed
                 if xspeed < -maxSpeed:
-                    xspeed = -14
+                    xspeed = -maxSpeed
                 if yspeed < -maxSpeed:
-                    yspeed = -14
+                    yspeed = -maxSpeed
                 
                 #Check for hole collision
                 if holerect.contains(ballrect) and abs(xspeed) < 4 and abs(yspeed) < 4:
@@ -466,10 +596,11 @@ while running:
                 elif holerect.contains(ballrect) and abs(xspeed) > 4 and abs(yspeed) > 4:
                     xspeed = random.randint(math.floor(-abs(xspeed)), math.floor(abs(xspeed)))
                     yspeed = random.randint(math.floor(-abs(yspeed)), math.floor(abs(yspeed)))
+                #Move the ball
                 ballrect.move_ip(xspeed, yspeed)
+                
 
     except:
-        poo = 123123123123123
-
-#
+        pass
+    
 pygame.quit()   
