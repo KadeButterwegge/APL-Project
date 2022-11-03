@@ -33,7 +33,7 @@ pygame.display.set_icon(icon)
 
 #Level layouts
 setPos = True
-level = 1
+level = 5
 levelRects = []
 levelMethods = []
 levelStrokes = []
@@ -445,6 +445,10 @@ def level5():
     terrain.append(grass)
     terFric.append(grassFric)
 
+    grass3 = pygame.draw.rect(screen, grassCol, [60, 216, 370, 85])
+    terrain.append(grass3)
+    terFric.append(grassFric)
+
     bridge = pygame.draw.rect(screen, bridgeCol, [175, 216, 150, 85])
     terrain.append(bridge)
     terFric.append(grassFric)
@@ -519,7 +523,7 @@ def level5():
     screen.blit(text, (10, 0))
 
     # Place hole on screen
-    holerect.update((300, 250), (30, 30))
+    holerect.update((400, 245), (30, 30))
     screen.blit(hole, holerect)
 
     # Start position for the ball
@@ -549,46 +553,67 @@ while running:
     try:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
-                xMouse = event.pos[0]
-                yMouse = event.pos[1]
-                startPos = [xMouse, yMouse]
+                # Store start position
+                startPos = [event.pos[0], event.pos[1]]
+
+        # Check if the mouse is clicking on the ball, and the mouse button was released
         elif event.type == pygame.MOUSEBUTTONUP and ballrect.collidepoint(startPos[0], startPos[1]):
+            #Store end position
             endPos = [event.pos[0], event.pos[1]]
+
+            #Set x and y starting speed for current stroke
             xspeed = (startPos[0]-endPos[0])/3
             yspeed = (startPos[1]-endPos[1])/3
-            if xspeed > 17:
-                xspeed = 14
-            if yspeed > 17:
-                yspeed = 14
-            if xspeed < -17:
-                xspeed = -14
-            if yspeed < -17:
-                yspeed = -14
+            
+            #Add stroke
             strokes += 1
+
+            #While loop to move ball
             while abs(xspeed) > 0 or abs(yspeed) > 0:
+
                 time.sleep(.016)
                 #Draw new ball position
                 screen.blit(ball, ballrect)
+
                 #Draw level
                 levelMethods[level-1]()
                 pygame.display.flip()
                 friction = 0.93
+
                 #Check for wall collisions
+                inMap = False
+
+                #Vertical rectangle collisions
                 for rectx in levelRects[level-1][0]:
                     if ballrect.colliderect(rectx):
                         xspeed = -xspeed
                         ballrect.move_ip(xspeed, 0)
                         if level > 3:
                             xspeed *= levelRects[level-1][4][levelRects[level-1][0].index(rectx)]
+
+                #Horizontal rectangle collisions
                 for recty in levelRects[level-1][1]:
                     if ballrect.colliderect(recty):
                         yspeed = -yspeed
                         ballrect.move_ip(0, yspeed)
                         if level > 3:
                             yspeed *= levelRects[level-1][5][levelRects[level-1][1].index(recty)]
+
+                #Determines friction, and makes sure ball is in map
                 for rect in levelRects[level-1][2]:
                     if rect.contains(ballrect):
+                        inMap = True
                         friction = levelRects[level-1][3][levelRects[level-1][2].index(rect)]
+                
+                # Teleport to prior position if ball goes outside of map
+                '''if inMap == False:
+                    friction = 0
+                    xspeed = 0
+                    yspeed = 0
+                    ballrect.update((startPos[0]-7, startPos[1]-7), (14, 14))
+                    startPos = (0, 0)
+                    strokes += 1'''
+
                 #Slow down the ball
                 if abs(xspeed) > 0:
                     xspeed *= friction
@@ -625,8 +650,6 @@ while running:
                     yspeed = random.randint(math.floor(-abs(yspeed)), math.floor(abs(yspeed)))
                 #Move the ball
                 ballrect.move_ip(xspeed, yspeed)
-                
-                
 
     except:
         pass
