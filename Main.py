@@ -36,6 +36,7 @@ setPos = True
 level = 5
 levelRects = []
 levelMethods = []
+levelStrokes = []
 
 #Level colors
 borderCol = (0, 0, 0)
@@ -43,7 +44,7 @@ grassCol = (0, 150, 0)
 boostCol = (90, 0, 90)
 slowCol = (160, 10, 15)
 bounceCol = (240, 120, 240)
-iceCol = (125, 225, 240)
+iceCol = (105, 205, 220)
 bridgeCol = (120, 80, 40)
 
 #Terrain frictions
@@ -99,6 +100,11 @@ def level1():
         level1Rects.append(terFric)
         levelRects.append(level1Rects)
     
+    # Stroke counter
+    font = pygame.font.SysFont('arial', 20)
+    text = font.render(str("Strokes: " + str(strokes)), True, (255, 255, 255))
+    screen.blit(text, (10, 0))
+
     # Place hole on screen
     holerect.update((250, 50), (30, 30))
     screen.blit(hole, holerect)
@@ -177,6 +183,11 @@ def level2():
         level2Rects.append(terFric)
         levelRects.append(level2Rects)
     
+    # Stroke counter
+    font = pygame.font.SysFont('arial', 20)
+    text = font.render(str("Strokes: " + str(strokes)), True, (255, 255, 255))
+    screen.blit(text, (10, 0))
+
     # Place hole on screen
     holerect.update((250, 40), (30, 30))
     screen.blit(hole, holerect)
@@ -259,6 +270,11 @@ def level3():
         level3Rects.append(terFric)
         levelRects.append(level3Rects)
     
+    # Stroke counter
+    font = pygame.font.SysFont('arial', 20)
+    text = font.render(str("Strokes: " + str(strokes)), True, (255, 255, 255))
+    screen.blit(text, (10, 0))
+
     # Place hole on screen
     holerect.update((75, 150), (30, 30))
     screen.blit(hole, holerect)
@@ -355,7 +371,7 @@ def level4():
 
     midRT = pygame.draw.rect(screen, borderCol, [319, 181, width, 119])
     Xobj.append(midRT)
-    XBounce.append(midRT)
+    XBounce.append(borBounce)
 
     mid3 = pygame.draw.rect(screen, borderCol, [175, 294, 150, width])
     Yobj.append(mid3)
@@ -381,7 +397,6 @@ def level4():
     Xobj.append(right)
     XBounce.append(borBounce)
 
-    # Other walls
     # 2D array containging vertical and horizontal rectangles lists
     if len(levelRects) <= level-1:
         level4Rects = []
@@ -393,6 +408,11 @@ def level4():
         level4Rects.append(YBounce)
         levelRects.append(level4Rects)
     
+    # Stroke counter
+    font = pygame.font.SysFont('arial', 20)
+    text = font.render(str("Strokes: " + str(strokes)), True, (255, 255, 255))
+    screen.blit(text, (10, 0))
+
     # Place hole on screen
     holerect.update((213, 337), (30, 30))
     screen.blit(hole, holerect)
@@ -470,6 +490,10 @@ def level5():
     Yobj.append(toprcap)
     YBounce.append(toprcap)
 
+    toplcap = pygame.draw.rect(screen, borderCol, [319, 215, 6, 1])
+    Yobj.append(toplcap)
+    YBounce.append(toprcap)
+
     bot = pygame.draw.rect(screen, borderCol, [44, 321, 137, width])
     Yobj.append(bot)
     YBounce.append(borBounce)
@@ -489,19 +513,20 @@ def level5():
         level5Rects.append(YBounce)
         levelRects.append(level5Rects)
     
-    # Place hole on screen
-    #holerect.update((250, 50), (30, 30))
-    #screen.blit(hole, holerect)
-
     # Stroke counter
-    '''font = pygame.font.SysFont('arial', 20)
-    text = font.render(str("strokes: " + str(strokes)), True, (0, 0, 0))
-    screen.blit(text, (100, 100))'''
+    font = pygame.font.SysFont('arial', 20)
+    text = font.render(str("Strokes: " + str(strokes)), True, (255, 255, 255))
+    screen.blit(text, (10, 0))
+
+    # Place hole on screen
+    holerect.update((300, 250), (30, 30))
+    screen.blit(hole, holerect)
 
     # Start position for the ball
     if setPos:
-        ballrect.update((0, 0), (14, 14))
+        ballrect.update((300, 250), (14, 14))
         setPos = False
+    screen.blit(ball, ballrect)
 
 
 levelMethods.append(level1)
@@ -539,7 +564,7 @@ while running:
                 xspeed = -14
             if yspeed < -17:
                 yspeed = -14
-
+            strokes += 1
             while abs(xspeed) > 0 or abs(yspeed) > 0:
                 time.sleep(.016)
                 #Draw new ball position
@@ -593,11 +618,14 @@ while running:
                     setPos = True
                     if level < len(levelMethods):
                         level += 1
+                        levelStrokes.append(strokes)
+                        strokes = 0
                 elif holerect.contains(ballrect) and abs(xspeed) > 4 and abs(yspeed) > 4:
                     xspeed = random.randint(math.floor(-abs(xspeed)), math.floor(abs(xspeed)))
                     yspeed = random.randint(math.floor(-abs(yspeed)), math.floor(abs(yspeed)))
                 #Move the ball
                 ballrect.move_ip(xspeed, yspeed)
+                
                 
 
     except:
