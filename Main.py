@@ -33,7 +33,7 @@ pygame.display.set_icon(icon)
 
 #Level layouts
 setPos = True
-level = 5
+level = 1
 levelRects = []
 levelMethods = []
 levelStrokes = []
@@ -524,7 +524,7 @@ def level5():
 
     # Start position for the ball
     if setPos:
-        ballrect.update((300, 250), (14, 14))
+        ballrect.update((107, 250), (14, 14))
         setPos = False
     screen.blit(ball, ballrect)
 
