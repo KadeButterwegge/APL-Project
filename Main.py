@@ -628,8 +628,43 @@ def level6():
     terFric.append(grassFric)
 
     tp = pygame.draw.rect(screen, tpCol, [390, 362, 25, 25])
+    tprects.append(tp)
+    tpcords.append((395, 117))
+
+    receive = pygame.draw.rect(screen, tpCol, [390, 112, 25, 25])
 
     # Border Walls
+    top = pygame.draw.rect(screen, borderCol, [44, 69, 412, width])
+    Yobj.append(top)
+    YBounce.append(borBounce)
+
+    top2 = pygame.draw.rect(screen, borderCol, [44, 319, 412, width])
+    Yobj.append(top2)
+    YBounce.append(borBounce)
+
+    bot = pygame.draw.rect(screen, borderCol, [44, 175, 412, width])
+    Yobj.append(bot)
+    YBounce.append(borBounce)
+
+    bot2 = pygame.draw.rect(screen, borderCol, [44, 425, 412, width])
+    Yobj.append(bot2)
+    YBounce.append(borBounce)
+
+    left = pygame.draw.rect(screen, borderCol, [44, 69, width, 112])
+    Xobj.append(left)
+    XBounce.append(borBounce)
+
+    left2 = pygame.draw.rect(screen, borderCol, [44, 319, width, 112])
+    Xobj.append(left2)
+    XBounce.append(borBounce)
+
+    right = pygame.draw.rect(screen, borderCol, [450, 69, width, 112])
+    Xobj.append(right)
+    XBounce.append(borBounce)
+
+    right2 = pygame.draw.rect(screen, borderCol, [450, 319, width, 112])
+    Xobj.append(right2)
+    XBounce.append(borBounce)
 
     # 2D array containging vertical and horizontal rectangles lists
     if len(levelRects) <= level-1:
@@ -640,6 +675,8 @@ def level6():
         level6Rects.append(terFric)
         level6Rects.append(XBounce)
         level6Rects.append(YBounce)
+        level6Rects.append(tprects)
+        level6Rects.append(tpcords)
         levelRects.append(level6Rects)
     
     # Stroke counter
@@ -648,12 +685,12 @@ def level6():
     screen.blit(text, (10, 0))
 
     # Place hole on screen
-    holerect.update((213, 337), (30, 30))
+    holerect.update((70, 112), (30, 30))
     screen.blit(hole, holerect)
 
     # Start position for the ball
     if setPos:
-        ballrect.update((68, 370), (14, 14))
+        ballrect.update((73, 370), (14, 14))
         setPos = False
     screen.blit(ball, ballrect)
 
@@ -704,7 +741,15 @@ while running:
                 levelMethods[level-1]()
                 pygame.display.flip()
                 friction = 0.93
-
+                
+                # Teleport introduced in level 6
+                if level > 5:
+                    for rect in levelRects[level-1][6]:
+                        if rect.contains(ballrect):
+                            ballrect.update((levelRects[level-1][7][levelRects[level-1][6].index(rect)]), (14, 14))
+                            xspeed = 0
+                            yspeed = 0
+                
                 #Check for wall collisions
                 inMap = False
 
@@ -713,6 +758,7 @@ while running:
                     if ballrect.colliderect(rectx):
                         xspeed = -xspeed
                         ballrect.move_ip(xspeed, 0)
+                        # Changes friction, different frictions are introduced in level 3
                         if level > 3:
                             xspeed *= levelRects[level-1][4][levelRects[level-1][0].index(rectx)]
 
@@ -721,6 +767,7 @@ while running:
                     if ballrect.colliderect(recty):
                         yspeed = -yspeed
                         ballrect.move_ip(0, yspeed)
+                        # Changes friction, different frictions are introduced in level 3
                         if level > 3:
                             yspeed *= levelRects[level-1][5][levelRects[level-1][1].index(recty)]
 
