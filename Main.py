@@ -33,10 +33,10 @@ pygame.display.set_icon(icon)
 
 #Level layouts
 setPos = True
-level = 6
+level = 1
 levelRects = []
 levelMethods = []
-levelStrokes = []
+levelStrokes = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 #Level colors
 borderCol = (0, 0, 0)
@@ -126,14 +126,15 @@ def level2():
     terFric = []
 
     # Ground
-    grass = pygame.draw.rect(screen, grassCol, [50, 25, 400, 180], 0)
+    grass = pygame.draw.rect(screen, grassCol, [50, 25, 400, 180])
     terrain.append(grass)
     terFric.append(grassFric)
 
     grass2 = pygame.draw.rect(screen, grassCol, [188, 175, 133, 300])
-    water = pygame.draw.rect(screen, (0, 0, 150), [130, 80, 245, 70], 0)
-    terrain.append(grass)
+    terrain.append(grass2)
     terFric.append(grassFric)
+
+    water = pygame.draw.rect(screen, (0, 0, 150), [130, 80, 245, 70], 0)
 
     # Width for the border
     width = 6
@@ -627,6 +628,18 @@ def level6():
     terrain.append(grass2)
     terFric.append(grassFric)
 
+    ice = pygame.draw.rect(screen, iceCol, [150, 75, 200, 100])
+    terrain.append(ice)
+    terFric.append(iceFric)
+
+    slow = pygame.draw.rect(screen, slowCol, [150, 325, 100, 100])
+    terrain.append(slow)
+    terFric.append(slowFric)
+
+    boost = pygame.draw.rect(screen, boostCol, [250, 325, 100, 100])
+    terrain.append(boost)
+    terFric.append(boostFric)
+
     tp = pygame.draw.rect(screen, tpCol, [390, 362, 25, 25])
     tprects.append(tp)
     tpcords.append((395, 117))
@@ -694,6 +707,112 @@ def level6():
         setPos = False
     screen.blit(ball, ballrect)
 
+def level7():
+    global levelRects
+    global setPos
+    screen.fill((0, 0, 150))
+    #Ball starting position
+
+    # Lists for horizontal and vertical rectangles
+    Xobj = []
+    Yobj = []
+    XBounce = []
+    YBounce = []
+    terrain = []
+    terFric = []
+    tprects = []
+    tpcords = []
+
+    # Width for the border
+    width = 6
+    
+    # Ground
+    
+    # Border Walls
+
+    # 2D array containging vertical and horizontal rectangles lists
+    if len(levelRects) <= level-1:
+        level7Rects = []
+        level7Rects.append(Xobj)
+        level7Rects.append(Yobj)
+        level7Rects.append(terrain)
+        level7Rects.append(terFric)
+        level7Rects.append(XBounce)
+        level7Rects.append(YBounce)
+        level7Rects.append(tprects)
+        level7Rects.append(tpcords)
+        levelRects.append(level7Rects)
+    
+    # Stroke counter
+    font = pygame.font.SysFont('arial', 20)
+    text = font.render(str("Strokes: " + str(strokes)), True, (255, 255, 255))
+    screen.blit(text, (10, 0))
+
+    # Place hole on screen
+    holerect.update((70, 112), (30, 30))
+    screen.blit(hole, holerect)
+
+    # Start position for the ball
+    if setPos:
+        ballrect.update((73, 370), (14, 14))
+        setPos = False
+    screen.blit(ball, ballrect)
+
+def scoreBoard():
+    # Blue background
+    screen.fill((0, 0, 150))
+
+    # Line width
+    width = 4
+
+    # Scoreboard background
+    pygame.draw.rect(screen, (200, 200, 200), [50, 200, 400, 100])
+    
+    # Change last number to the total
+    total = 0
+    index = 0
+    while index < 9:
+        total += levelStrokes[index]
+        index += 1
+    levelStrokes[10] = total
+    
+    # Draw scoreboard lines
+    vertLines = 0
+    xPos = 46
+    while vertLines < 11:
+        pygame.draw.rect(screen, borderCol, [xPos, 200, width, 100])
+        xPos += 40
+        vertLines += 1
+
+    horLines = 0
+    yPos = 200
+    while horLines < 3:
+        pygame.draw.rect(screen, borderCol, [50, yPos, 400, width])
+        yPos += 50
+        horLines += 1
+    
+    # Fill in top cells
+    hole = 1
+    xPos = 63
+    font = pygame.font.SysFont('arial', 20)
+    while hole < 10:
+        text = font.render(str(hole), True, borderCol)
+        screen.blit(text, (xPos, 215))
+        xPos += 40
+        hole += 1
+    text = font.render(str("Total"), True, borderCol)
+    screen.blit(text, (410, 215))
+
+    # Fill in bottom cells
+    hole = 0
+    xPos = 63
+    while hole < 10:
+        text = font.render(str(levelStrokes[hole]), True, borderCol)
+        screen.blit(text, (xPos, 265))
+        hole += 1
+        xPos += 40
+    
+
 # Add all levels to a list
 levelMethods.append(level1)
 levelMethods.append(level2)
@@ -701,6 +820,7 @@ levelMethods.append(level3)
 levelMethods.append(level4)
 levelMethods.append(level5)
 levelMethods.append(level6)
+levelMethods.append(level7)
 
 running = True
 while running:
@@ -814,9 +934,24 @@ while running:
                     yspeed = 0
                     setPos = True
                     if level < len(levelMethods):
-                        level += 1
-                        levelStrokes.append(strokes)
+
+                        # Update stroke count
+                        levelStrokes[level-1] = strokes
+
+                        # Reset Strokes
                         strokes = 0
+
+                        # Go to next Level
+                        level += 1
+
+                        # Display scoreboard
+                        scoreBoard()
+                        pygame.display.update()
+                        pygame.display.flip()
+                        time.sleep(3)
+                        
+                        
+
                 elif holerect.contains(ballrect) and abs(xspeed) > 4 and abs(yspeed) > 4:
                     xspeed = random.randint(math.floor(-abs(xspeed)), math.floor(abs(xspeed)))
                     yspeed = random.randint(math.floor(-abs(yspeed)), math.floor(abs(yspeed)))
