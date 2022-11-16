@@ -33,11 +33,14 @@ pygame.display.set_icon(icon)
 
 #Level layouts
 setPos = True
-level = 7
+level = 1
 levelRects = []
 levelMethods = []
 levelStrokes = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 totalStrokes = 0
+level9TPRects = [ballrect, ballrect, ballrect, ballrect]
+level9Rects = [level9TPRects, level9TPRects, level9TPRects, level9TPRects, level9TPRects, level9TPRects, level9TPRects, level9TPRects]
+level9Speeds = [100, 190, 275, 360, 5, 5, 5, 5]
 
 #Level colors
 borderCol = (0, 0, 0)
@@ -47,7 +50,7 @@ slowCol = (160, 10, 15)
 bounceCol = (240, 120, 240)
 iceCol = (105, 205, 220)
 bridgeCol = (120, 80, 40)
-tpCol = (245, 255, 45)
+tpCol = (200, 200, 30)
 
 #Terrain frictions
 grassFric = 0.93
@@ -104,7 +107,7 @@ def level1():
     
     # Stroke counter
     font = pygame.font.SysFont('arial', 20)
-    text = font.render(str("Strokes: " + str(strokes)), True, (255, 255, 255))
+    text = font.render(str("Level " + str(level) + " Strokes: " + str(strokes)), True, (255, 255, 255))
     screen.blit(text, (10, 0))
 
     # Place hole on screen
@@ -188,7 +191,7 @@ def level2():
     
     # Stroke counter
     font = pygame.font.SysFont('arial', 20)
-    text = font.render(str("Strokes: " + str(strokes)), True, (255, 255, 255))
+    text = font.render(str("Level " + str(level) + " Strokes: " + str(strokes)), True, (255, 255, 255))
     screen.blit(text, (10, 0))
 
     # Place hole on screen
@@ -275,7 +278,7 @@ def level3():
     
     # Stroke counter
     font = pygame.font.SysFont('arial', 20)
-    text = font.render(str("Strokes: " + str(strokes)), True, (255, 255, 255))
+    text = font.render(str("Level " + str(level) + " Strokes: " + str(strokes)), True, (255, 255, 255))
     screen.blit(text, (10, 0))
 
     # Place hole on screen
@@ -413,7 +416,7 @@ def level4():
     
     # Stroke counter
     font = pygame.font.SysFont('arial', 20)
-    text = font.render(str("Strokes: " + str(strokes)), True, (255, 255, 255))
+    text = font.render(str("Level " + str(level) + " Strokes: " + str(strokes)), True, (255, 255, 255))
     screen.blit(text, (10, 0))
 
     # Place hole on screen
@@ -587,7 +590,7 @@ def level5():
     
     # Stroke counter
     font = pygame.font.SysFont('arial', 20)
-    text = font.render(str("Strokes: " + str(strokes)), True, (255, 255, 255))
+    text = font.render(str("Level " + str(level) + " Strokes: " + str(strokes)), True, (255, 255, 255))
     screen.blit(text, (10, 0))
 
     # Place hole on screen
@@ -695,7 +698,7 @@ def level6():
     
     # Stroke counter
     font = pygame.font.SysFont('arial', 20)
-    text = font.render(str("Strokes: " + str(strokes)), True, (255, 255, 255))
+    text = font.render(str("Level " + str(level) + " Strokes: " + str(strokes)), True, (255, 255, 255))
     screen.blit(text, (10, 0))
 
     # Place hole on screen
@@ -733,20 +736,20 @@ def level7():
 
     # 2D array containging vertical and horizontal rectangles lists
     if len(levelRects) <= level-1:
-        level7Rects = []
-        level7Rects.append(Xobj)
-        level7Rects.append(Yobj)
-        level7Rects.append(terrain)
-        level7Rects.append(terFric)
-        level7Rects.append(XBounce)
-        level7Rects.append(YBounce)
-        level7Rects.append(tprects)
-        level7Rects.append(tpcords)
-        levelRects.append(level7Rects)
+        level9Rects = []
+        level9Rects.append(Xobj)
+        level9Rects.append(Yobj)
+        level9Rects.append(terrain)
+        level9Rects.append(terFric)
+        level9Rects.append(XBounce)
+        level9Rects.append(YBounce)
+        level9Rects.append(tprects)
+        level9Rects.append(tpcords)
+        levelRects.append(level9Rects)
     
     # Stroke counter
     font = pygame.font.SysFont('arial', 20)
-    text = font.render(str("Level " + str(level) + " strokes: " + str(strokes)), True, (255, 255, 255))
+    text = font.render(str("Level " + str(level) + " Strokes: " + str(strokes)), True, (255, 255, 255))
     screen.blit(text, (10, 0))
 
     # Place hole on screen
@@ -797,7 +800,7 @@ def level8():
     
     # Stroke counter
     font = pygame.font.SysFont('arial', 20)
-    text = font.render(str("Strokes: " + str(strokes)), True, (255, 255, 255))
+    text = font.render(str("Level " + str(level) + " Strokes: " + str(strokes)), True, (255, 255, 255))
     screen.blit(text, (10, 0))
 
     # Place hole on screen
@@ -813,6 +816,9 @@ def level8():
 def level9():
     global levelRects
     global setPos
+    global level9Speeds
+    global level9TPRects
+    global level9Rects
     screen.fill((0, 0, 150))
     #Ball starting position
 
@@ -823,41 +829,109 @@ def level9():
     YBounce = []
     terrain = []
     terFric = []
-    tprects = []
     tpcords = []
 
     # Width for the border
     width = 6
     
     # Ground
+    grass = pygame.draw.rect(screen, grassCol, [100, 50, 300, 400], 0)
+    terrain.append(grass)
+    terFric.append(grassFric)
+
+    ice = pygame.draw.rect(screen, iceCol, [100, 160, 300, 180])
+    terrain.append(ice)
+    terFric.append(iceFric)
     
+    slow = pygame.draw.rect(screen, slowCol, [100, 340, 300, 110])
+    terrain.append(slow)
+    terFric.append(slowFric)
+
+    boost = pygame.draw.rect(screen, boostCol, [100, 50, 300, 110])
+    terrain.append(boost)
+    terFric.append(boostFric)
+
+    slow2 = pygame.draw.rect(screen, slowCol, [220, 75, 60, 60])
+    terrain.append(slow2)
+    terFric.append(slowFric)
+
+    # Keeps moving rectangles within the border
+    if level9Speeds[0] < 100 or level9Speeds[0] > 360:
+        level9Speeds[4] = -level9Speeds[4]
+    if level9Speeds[1] < 100 or level9Speeds[1] > 360:
+        level9Speeds[5] = -level9Speeds[5]
+    if level9Speeds[2] < 100 or level9Speeds[2] > 360:
+        level9Speeds[6] = -level9Speeds[6]
+    if level9Speeds[3] < 100 or level9Speeds[3] > 360:
+        level9Speeds[7] = -level9Speeds[7]
+
+    # Move the rectangles
+    level9Speeds[0] = level9Speeds[0] + level9Speeds[4]
+    level9Speeds[1] = level9Speeds[1] + level9Speeds[5]
+    level9Speeds[2] = level9Speeds[2] + level9Speeds[6]
+    level9Speeds[3] = level9Speeds[3] + level9Speeds[7]
+
+    # Other rectangles
+    level9TPRects[0] = pygame.draw.rect(screen, (255, 85, 10), [level9Speeds[0], 170, 40, 40])
+    tpcords.append((143.5, 393.5))
+    pygame.draw.rect(screen, (255, 85, 10), [131.5, 380, 40, 40])
+
+    level9TPRects[1] = pygame.draw.rect(screen, tpCol, [level9Speeds[1], 210, 40, 40])
+    pygame.draw.rect(screen, tpCol, [181.5, 380, 40, 40])
+    tpcords.append((193.5, 393.5))
+
+    level9TPRects[2] = pygame.draw.rect(screen, (50, 90, 180), [level9Speeds[2], 250, 40, 40])
+    pygame.draw.rect(screen, (50, 90, 180), [278.5, 380, 40, 40])
+    tpcords.append((290.5, 393.5))
+
+    level9TPRects[3] = pygame.draw.rect(screen, (235, 10, 255), [level9Speeds[3], 290, 40, 40])
+    pygame.draw.rect(screen, (235, 10, 255), [328.5, 380, 40, 40])
+    tpcords.append((340.5, 393.5))
+
     # Border Walls
+    top = pygame.draw.rect(screen, bounceCol, [94, 44, 312, width])
+    Yobj.append(top)
+    YBounce.append(pinkBounce)
+
+    bottom = pygame.draw.rect(screen, bounceCol, [94, 450, 312, width])
+    Yobj.append(bottom)
+    YBounce.append(pinkBounce)
+
+    left = pygame.draw.rect(screen, bounceCol, [94, 44, width, 412])
+    Xobj.append(left)
+    XBounce.append(pinkBounce)
+
+    right = pygame.draw.rect(screen, bounceCol, [400, 44, width, 412])
+    Xobj.append(right)
+    XBounce.append(pinkBounce)
 
     # 2D array containging vertical and horizontal rectangles lists
     if len(levelRects) <= level-1:
-        level9Rects = []
-        level9Rects.append(Xobj)
-        level9Rects.append(Yobj)
-        level9Rects.append(terrain)
-        level9Rects.append(terFric)
-        level9Rects.append(XBounce)
-        level9Rects.append(YBounce)
-        level9Rects.append(tprects)
-        level9Rects.append(tpcords)
+        level9Rects[0] = Xobj
+        level9Rects[1] = Yobj
+        level9Rects[2] = terrain
+        level9Rects[3] = terFric
+        level9Rects[4] = XBounce
+        level9Rects[5] = YBounce
+        level9Rects[7] = tpcords
         levelRects.append(level9Rects)
+
+    # Update saved TP rects
+    if level == 9:
+        levelRects[7][6] = level9TPRects
     
     # Stroke counter
     font = pygame.font.SysFont('arial', 20)
-    text = font.render(str("Strokes: " + str(strokes)), True, (255, 255, 255))
+    text = font.render(str("Level " + str(level) + " Strokes: " + str(strokes)), True, (255, 255, 255))
     screen.blit(text, (10, 0))
 
     # Place hole on screen
-    holerect.update((70, 112), (30, 30))
+    holerect.update((239, 94), (30, 30))
     screen.blit(hole, holerect)
 
     # Start position for the ball
     if setPos:
-        ballrect.update((73, 370), (14, 14))
+        ballrect.update((240, 393.5), (14, 14))
         setPos = False
     screen.blit(ball, ballrect)
 
@@ -907,6 +981,16 @@ def scoreBoard():
         hole += 1
         xPos += 40
     
+level1()
+level2()
+level3()
+level4()
+level5()
+level6()
+level7()
+level8()
+level9()
+
 
 # Add all levels to a list
 levelMethods.append(level1)
