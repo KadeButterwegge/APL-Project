@@ -33,11 +33,14 @@ pygame.display.set_icon(icon)
 
 #Level layouts
 setPos = True
-level = 9
+level = 8
 levelRects = []
 levelMethods = []
 levelStrokes = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 totalStrokes = 0
+level8Terrain = [ballrect, ballrect]
+level8Rects = [[], [], [], [], [], [], [], []]
+level8Speeds = [100, 3, 300, 3]
 level9TPRects = [ballrect, ballrect, ballrect, ballrect]
 level9Rects = [level9TPRects, level9TPRects, level9TPRects, level9TPRects, level9TPRects, level9TPRects, level9TPRects, level9TPRects]
 level9Speeds = [100, 190, 275, 360, 5, 5, 5, 5]
@@ -765,8 +768,10 @@ def level7():
 def level8():
     global levelRects
     global setPos
+    global level8Terrain
+    global level8Rects
+    global level8Speeds
     screen.fill((0, 0, 150))
-    #Ball starting position
 
     # Lists for horizontal and vertical rectangles
     Xobj = []
@@ -781,21 +786,52 @@ def level8():
     # Width for the border
     width = 6
     
+    # Keeps moving rectangles within the border
+    if level8Speeds[0] < 100 or level8Speeds[0] > 300:
+        level8Speeds[1] = -level8Speeds[1]
+    if level8Speeds[2] < 100 or level8Speeds[2] > 300:
+        level8Speeds[3] = -level8Speeds[3]
+
+    level8Speeds[0] = level8Speeds[0] + level8Speeds[1]
+    level8Speeds[2] = level8Speeds[2] + level8Speeds[3]
+
     # Ground
+
+    hiddenRect = pygame.draw.rect(screen, (0, 0, 150), [100, 50, 300, 400])
+    level8Terrain.append(hiddenRect)
+    terFric.append(grassFric)
+
+    hidden2 = pygame.draw.rect(screen, (0, 0, 150), [100, 175, 300, 150])
+    level8Terrain.append(hidden2)
+    terFric.append(grassFric)
+
+    level8Terrain[0] = pygame.draw.rect(screen, bridgeCol, [level8Speeds[0], 175, 100, 75])
+    terFric.append(grassFric)
+
+    level8Terrain[1] = pygame.draw.rect(screen, bridgeCol, [level8Speeds[2], 250, 100, 75])
+    terFric.append(grassFric)
+
+    grass1 = pygame.draw.rect(screen, grassCol, [100, 50, 300, 125])
+    level8Terrain.append(grass1)
+    terFric.append(grassFric)
+
+    grass2 = pygame.draw.rect(screen, grassCol, [100, 325, 300, 125])
+    level8Terrain.append(grass2)
+    terFric.append(grassFric)
+    
     
     # Border Walls
 
     # 2D array containging vertical and horizontal rectangles lists
     if len(levelRects) <= level-1:
-        level8Rects = []
-        level8Rects.append(Xobj)
-        level8Rects.append(Yobj)
-        level8Rects.append(terrain)
-        level8Rects.append(terFric)
-        level8Rects.append(XBounce)
-        level8Rects.append(YBounce)
-        level8Rects.append(tprects)
-        level8Rects.append(tpcords)
+        level8Rects[0] = Xobj
+        level8Rects[1] = Yobj
+        level8Rects[2] = level8Terrain
+        level8Rects[3] = terFric
+        level8Rects[4] = XBounce
+        level8Rects[5] = YBounce
+        level8Rects[6] = tprects
+        level8Rects[7] = tpcords
         levelRects.append(level8Rects)
     
     # Stroke counter
@@ -809,7 +845,7 @@ def level8():
 
     # Start position for the ball
     if setPos:
-        ballrect.update((73, 370), (14, 14))
+        ballrect.update((250, 370), (14, 14))
         setPos = False
     screen.blit(ball, ballrect)
 
@@ -838,17 +874,13 @@ def level9():
     terrain.append(grass)
     terFric.append(grassFric)
 
-    ice = pygame.draw.rect(screen, iceCol, [100, 160, 300, 180])
+    ice = pygame.draw.rect(screen, iceCol, [100, 50, 300, 290])
     terrain.append(ice)
     terFric.append(iceFric)
     
     slow = pygame.draw.rect(screen, slowCol, [100, 340, 300, 110])
     terrain.append(slow)
     terFric.append(slowFric)
-
-    boost = pygame.draw.rect(screen, boostCol, [100, 50, 300, 110])
-    terrain.append(boost)
-    terFric.append(boostFric)
 
     slow2 = pygame.draw.rect(screen, slowCol, [220, 75, 60, 60])
     terrain.append(slow2)
@@ -1077,6 +1109,26 @@ while running:
                     if rect.contains(ballrect):
                         inMap = True
                         friction = levelRects[level-1][3][levelRects[level-1][2].index(rect)]
+                if level == 8:
+                    if levelRects[level-1][2][3].contains(ballrect) and levelRects[level-1][2][0].contains(ballrect) == False:
+                        if levelRects[level-1][2][3].contains(ballrect) and levelRects[level-1][2][1].contains(ballrect) == False:
+                            if ballrect.colliderect(levelRects[level-1][2][0]) and ballrect.colliderect(levelRects[level-1][2][0]):
+                                inMap = True
+                                ballrect.move_ip(level8Speeds[1], 0)
+                            else:
+                                inMap = False     
+                if level == 8:  
+                    if levelRects[level-1][2][0].contains(ballrect):
+                        inMap = True
+                        ballrect.move_ip(level8Speeds[1], 0)
+                        screen.blit(ball, ballrect)
+                        xspeed = 1
+                    elif levelRects[level-1][2][1].contains(ballrect):
+                        inMap = True
+                        ballrect.move_ip(level8Speeds[3], 0)
+                        screen.blit(ball, ballrect)
+                        xspeed = 1
+                                    
                 
                 # Teleport to prior position if ball goes outside of map
                 if inMap == False:
