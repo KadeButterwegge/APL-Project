@@ -33,7 +33,7 @@ pygame.display.set_icon(icon)
 
 #Level layouts
 setPos = True
-level = 1
+level = 9
 levelRects = []
 levelMethods = []
 levelStrokes = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -598,7 +598,7 @@ def level5():
     screen.blit(hole, holerect)
 
     # Start position for the ball
-    if setPos:
+    if setPos == True:
         ballrect.update((88, 380), (14, 14))
         setPos = False
     screen.blit(ball, ballrect)
@@ -820,7 +820,6 @@ def level9():
     global level9TPRects
     global level9Rects
     screen.fill((0, 0, 150))
-    #Ball starting position
 
     # Lists for horizontal and vertical rectangles
     Xobj = []
@@ -931,7 +930,7 @@ def level9():
 
     # Start position for the ball
     if setPos:
-        ballrect.update((240, 393.5), (14, 14))
+        ballrect.update((243, 393.5), (14, 14))
         setPos = False
     screen.blit(ball, ballrect)
 
@@ -990,6 +989,7 @@ level6()
 level7()
 level8()
 level9()
+setPos = True
 
 
 # Add all levels to a list
@@ -1115,7 +1115,6 @@ while running:
                     yspeed = 0
                     setPos = True
                     if level < len(levelMethods):
-
                         # Update stroke count
                         levelStrokes[level-1] = strokes
                         totalStrokes += strokes
