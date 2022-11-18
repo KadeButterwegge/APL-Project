@@ -33,7 +33,7 @@ pygame.display.set_icon(icon)
 
 #Level layouts
 setPos = True
-level = 8
+level = 7
 levelRects = []
 levelMethods = []
 levelStrokes = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -796,7 +796,6 @@ def level8():
     level8Speeds[2] = level8Speeds[2] + level8Speeds[3]
 
     # Ground
-
     hiddenRect = pygame.draw.rect(screen, (0, 0, 150), [100, 50, 300, 400])
     level8Terrain.append(hiddenRect)
     terFric.append(grassFric)
@@ -805,11 +804,11 @@ def level8():
     level8Terrain.append(hidden2)
     terFric.append(grassFric)
 
-    level8Terrain[0] = pygame.draw.rect(screen, bridgeCol, [level8Speeds[0], 175, 100, 75])
-    terFric.append(grassFric)
+    level8Terrain[0] = pygame.draw.rect(screen, boostCol, [level8Speeds[0], 175, 100, 75])
+    terFric.append(boostFric)
 
-    level8Terrain[1] = pygame.draw.rect(screen, bridgeCol, [level8Speeds[2], 250, 100, 75])
-    terFric.append(grassFric)
+    level8Terrain[1] = pygame.draw.rect(screen, boostCol, [level8Speeds[2], 250, 100, 75])
+    terFric.append(boostFric)
 
     grass1 = pygame.draw.rect(screen, grassCol, [100, 50, 300, 125])
     level8Terrain.append(grass1)
@@ -821,6 +820,33 @@ def level8():
     
     
     # Border Walls
+    top = pygame.draw.rect(screen, borderCol, [94, 44, 312, width])
+    Yobj.append(top)
+    YBounce.append(borBounce)
+
+    bot = pygame.draw.rect(screen, borderCol, [94, 450, 312, width])
+    Yobj.append(bot)
+    YBounce.append(borBounce)
+
+    left = pygame.draw.rect(screen, borderCol, [94, 44, width, 412])
+    Xobj.append(left)
+    XBounce.append(borBounce)
+
+    right = pygame.draw.rect(screen, borderCol, [400, 44, width, 412])
+    Xobj.append(right)
+    XBounce.append(borBounce)
+
+    midL = pygame.draw.rect(screen, borderCol, [100, 169, 60, width])
+    Yobj.append(midL)
+    YBounce.append(borBounce)
+
+    mid = pygame.draw.rect(screen, borderCol, [210, 169, 80, width])
+    Yobj.append(mid)
+    YBounce.append(borBounce)
+
+    midR = pygame.draw.rect(screen, borderCol, [340, 169, 60, width])
+    Yobj.append(midR)
+    YBounce.append(borBounce)
 
     # 2D array containging vertical and horizontal rectangles lists
     if len(levelRects) <= level-1:
@@ -840,12 +866,12 @@ def level8():
     screen.blit(text, (10, 0))
 
     # Place hole on screen
-    holerect.update((70, 112), (30, 30))
+    holerect.update((239, 75), (30, 30))
     screen.blit(hole, holerect)
 
     # Start position for the ball
     if setPos:
-        ballrect.update((250, 370), (14, 14))
+        ballrect.update((243, 410), (14, 14))
         setPos = False
     screen.blit(ball, ballrect)
 
