@@ -33,7 +33,7 @@ pygame.display.set_icon(icon)
 
 #Level layouts
 setPos = True
-level = 1
+level = 7
 levelRects = []
 levelMethods = []
 levelStrokes = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -731,6 +731,29 @@ def level7():
     width = 6
     
     # Ground
+    ice1 = pygame.draw.rect(screen, iceCol, [50, 50, 400, 50])
+    terrain.append(ice1)
+    terFric.append(iceFric)
+
+    ice2 = pygame.draw.rect(screen, iceCol, [100, 50, 300, 100])
+    terrain.append(ice2)
+    terFric.append(iceFric)
+
+    ice3 = pygame.draw.rect(screen, iceCol, [150, 50, 200, 150])
+    terrain.append(ice3)
+    terFric.append(iceFric)
+
+    ice4 = pygame.draw.rect(screen, iceCol, [200, 50, 100, 200])
+    terrain.append(ice4)
+    terFric.append(iceFric)
+
+    ice5 = pygame.draw.rect(screen, iceCol, [225, 50, 50, 300])
+    terrain.append(ice5)
+    terFric.append(iceFric)
+
+    ice6 = pygame.draw.rect(screen, iceCol, [235, 50, 30, 400])
+    terrain.append(ice6)
+    terFric.append(iceFric)
     
     # Border Walls
 
@@ -753,7 +776,7 @@ def level7():
     screen.blit(text, (10, 0))
 
     # Place hole on screen
-    holerect.update((70, 112), (30, 30))
+    holerect.update((239, 420), (30, 30))
     screen.blit(hole, holerect)
 
     # Start position for the ball
