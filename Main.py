@@ -31,9 +31,13 @@ pygame.display.set_caption("Mini Golf")
 icon = pygame.image.load('Logo.png')
 pygame.display.set_icon(icon)
 
+#Home screen setup
+buttons = []
+
 #Level layouts
+loaded = False
 setPos = True
-level = 8
+level = 1
 levelRects = []
 levelMethods = []
 levelStrokes = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -65,6 +69,9 @@ bounceFric = -1.5
 #Wall bounce
 borBounce = 1
 pinkBounce = 5
+
+#def mainScreen():
+
 
 def level1():
     global levelRects
@@ -1038,16 +1045,17 @@ def scoreBoard():
         hole += 1
         xPos += 40
     
-level1()
-level2()
-level3()
-level4()
-level5()
-level6()
-level7()
-level8()
-level9()
-setPos = True
+def loadLevels():
+    level1()
+    level2()
+    level3()
+    level4()
+    level5()
+    level6()
+    level7()
+    level8()
+    level9()
+    setPos = True
 
 
 # Add all levels to a list
@@ -1071,6 +1079,14 @@ while running:
     clock.tick(FPS)
     pygame.display.flip()
     levelMethods[level-1]()
+
+
+    '''while level == 0:
+        homeScreen()'''
+    if loaded == False:
+        loadLevels()
+        loaded = True
+        
     try:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
