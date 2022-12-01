@@ -33,11 +33,13 @@ pygame.display.set_icon(icon)
 
 #Home screen setup
 buttons = []
+colorButtons = []
 
 #Level layouts
+load = False
 loaded = False
 setPos = True
-level = 1
+level = 0
 levelRects = []
 levelMethods = []
 levelStrokes = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -59,6 +61,17 @@ iceCol = (105, 205, 220)
 bridgeCol = (120, 80, 40)
 tpCol = (200, 200, 30)
 
+#Ball colors
+White = (255, 255, 255)
+Black = (0, 0, 0)
+Red = (255, 0, 0)
+Orange = (250, 125, 5)
+Yellow = (250, 250, 5)
+Green = (0, 255, 0)
+Blue = (0, 0, 255)
+Purple = (180, 30, 210)
+ballColors = [White, Black, Red, Orange, Yellow, Green, Blue, Purple]
+
 #Terrain frictions
 grassFric = 0.93
 boostFric = 1.05
@@ -70,8 +83,36 @@ bounceFric = -1.5
 borBounce = 1
 pinkBounce = 5
 
-#def mainScreen():
+def homeScreen():
+    global buttons
+    screen.fill((0, 0, 155))
+    
+    font = pygame.font.SysFont('arial', 50)
+    text = font.render(str("Play"), True, (255, 255, 255))
 
+    # Play button
+    pygame.draw.rect(screen, Black, [175, 150, 150, 75])
+    buttons.append(pygame.draw.rect(screen, White, [175, 150, 150, 75], 4))
+    screen.blit(text, (210, 156))
+
+    # Ball button
+    pygame.draw.rect(screen, Black, [175, 250, 150, 75])
+    buttons.append(pygame.draw.rect(screen, White, [175, 250, 150, 75], 4))
+    text = font.render(str("Ball"), True, (255, 255, 255))
+    screen.blit(text, (218, 256))
+
+def colorChooser():
+    global colorButtons
+    global ballColors
+
+    screen.fill((0, 0, 155))
+
+    font = pygame.font.SysFont('arial', 50)
+    text = font.render(str("Choose Color"), True, (255, 255, 255))
+    
+    pygame.draw.rect(screen, Black, [100, 50, 300, 75])
+    pygame.draw.rect(screen, White, [100, 50, 300, 75], 4)
+    screen.blit(text, (125, 58))
 
 def level1():
     global levelRects
@@ -1078,14 +1119,26 @@ while running:
     pygame.display.update()
     clock.tick(FPS)
     pygame.display.flip()
-    levelMethods[level-1]()
+    #levelMethods[level-1]()
 
 
-    '''while level == 0:
-        homeScreen()'''
-    if loaded == False:
+    if level == 0:
+        homeScreen()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mousePos = [event.pos[0], event.pos[1]]
+        elif event.type == pygame.MOUSEBUTTONUP and buttons[0].collidepoint(mousePos[0], mousePos[1]):
+            level = 1
+            load = True 
+        elif event.type == pygame.MOUSEBUTTONUP and buttons[1].collidepoint(mousePos[0], mousePos[1]):
+            level = -1
+    if level == -1:
+        colorChooser()
+    if load == True:
         loadLevels()
+        load = False
         loaded = True
+    if loaded == True:
+        levelMethods[level-1]()
         
     try:
         if event.type == pygame.MOUSEBUTTONDOWN:
