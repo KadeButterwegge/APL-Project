@@ -3,6 +3,8 @@ import pygame
 import time
 import random
 import math
+import numpy as np
+from PIL import Image
 pygame.init()
 
 #Make Screen
@@ -70,6 +72,7 @@ Yellow = (250, 250, 5)
 Green = (0, 255, 0)
 Blue = (0, 0, 255)
 Purple = (180, 30, 210)
+currentColor = White
 ballColors = [White, Black, Red, Orange, Yellow, Green, Blue, Purple]
 
 #Terrain frictions
@@ -101,6 +104,13 @@ def homeScreen():
     text = font.render(str("Ball"), True, (255, 255, 255))
     screen.blit(text, (218, 256))
 
+    # Header
+    pygame.draw.rect(screen, Black, [50, 25, 400, 100])
+    pygame.draw.rect(screen, White, [50, 25, 400, 100], 4)
+    text = font.render(str("Rad Mini Golf Game"), True, (255, 255, 255))
+    font = pygame.font.SysFont('arial', 75)
+    screen.blit(text, (65, 45))
+
 def colorChooser():
     global colorButtons
     global ballColors
@@ -116,6 +126,38 @@ def colorChooser():
     pygame.draw.rect(screen, Black, [100, 50, 300, 75])
     pygame.draw.rect(screen, White, [100, 50, 300, 75], 4)
     screen.blit(text, (125, 58))
+
+    # Color button background
+    pygame.draw.rect(screen, Black, [100, 205, 300, 190])
+    pygame.draw.rect(screen, White, [100, 205, 300, 190], 4)
+
+    # Warning message
+    pygame.draw.rect(screen, Black, [140, 140, 220, 50])
+    pygame.draw.rect(screen, White, [140, 140, 220, 50], 4)
+    font = pygame.font.SysFont('arial', 13)
+    text = font.render(str("WARNING: Changing color may cause lag"), True, (255, 255, 255))
+    screen.blit(text, (150, 155))
+
+    # Color buttons
+    buttonsDrawn = 0
+    x = 125
+    y = 235
+    size = 50
+    while buttonsDrawn < 8:
+        colorButtons.append(pygame.draw.rect(screen, ballColors[buttonsDrawn], [x, y, size, size]))
+        pygame.draw.rect(screen, (50, 50, 50), [x, y, size, size], 4)
+        x += 68
+        buttonsDrawn += 1
+        if buttonsDrawn == 4:
+            x = 125
+            y = 315
+    
+    # Back button
+    colorButtons.append(pygame.draw.rect(screen, Black, [200, 410, 100, 50]))
+    pygame.draw.rect(screen, White, [200, 410, 100, 50], 4)
+    font = pygame.font.SysFont('arial', 35)
+    text = font.render(str("Back"), True, (255, 255, 255))
+    screen.blit(text, (220, 415))
 
 def level1():
     global levelRects
@@ -1124,18 +1166,47 @@ while running:
     pygame.display.flip()
     #levelMethods[level-1]()
 
-
+    # Home screen
     if level == 0:
         homeScreen()
         if event.type == pygame.MOUSEBUTTONDOWN:
             mousePos = [event.pos[0], event.pos[1]]
+        # Plays game when you hit Play
         elif event.type == pygame.MOUSEBUTTONUP and buttons[0].collidepoint(mousePos[0], mousePos[1]):
             level = 1
             load = True 
+
+        # Goes to color chooser if you hit Ball
         elif event.type == pygame.MOUSEBUTTONUP and buttons[1].collidepoint(mousePos[0], mousePos[1]):
             level = -1
+    # Color chooser
     if level == -1:
         colorChooser()
+        time.sleep(0.05)
+        if event.type == pygame.MOUSEBUTTONUP:
+            if colorButtons[8].collidepoint(event.pos[0], event.pos[1]):
+                level = 0
+            if level == -1:
+                for rect in colorButtons:
+                    if rect.collidepoint(event.pos[0], event.pos[1]):
+                        im = Image.open('ball.png')
+                        data = np.array(im)
+
+                        r1, g1, b1 = White # Original value
+                        r2, g2, b2 = ballColors[colorButtons.index(rect)] # Value that we want to replace it with
+
+                        red, green, blue = data[:,:,0], data[:,:,1], data[:,:,2]
+                        mask = (red == r1) & (green == g1) & (blue == b1)
+                        data[:,:,:3][mask] = [r2, g2, b2]
+
+                        im = Image.fromarray(data)
+                        im.save('ball_modified.png')
+                        ball = pygame.image.load("ball_modified.png")
+                        ball = pygame.transform.scale(ball, (14, 14))
+                        ballrect = ball.get_rect()
+                        currentColor = ballColors[colorButtons.index(rect)]
+                        
+                        
     if load == True:
         loadLevels()
         load = False
@@ -1274,7 +1345,10 @@ while running:
                         strokes = 0
 
                         # Go to next Level
-                        level += 1
+                        if level < 9:
+                            level += 1
+                        elif level == 9:
+                            level = 0
 
                         # Display scoreboard
                         scoreBoard()
