@@ -105,11 +105,14 @@ def colorChooser():
     global colorButtons
     global ballColors
 
+    # Background color
     screen.fill((0, 0, 155))
 
+    # Setup text
     font = pygame.font.SysFont('arial', 50)
     text = font.render(str("Choose Color"), True, (255, 255, 255))
     
+    # Pick color button
     pygame.draw.rect(screen, Black, [100, 50, 300, 75])
     pygame.draw.rect(screen, White, [100, 50, 300, 75], 4)
     screen.blit(text, (125, 58))
