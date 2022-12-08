@@ -422,15 +422,15 @@ def level4():
     terrain.append(grass4)
     terFric.append(grassFric)
 
-    ice = pygame.draw.rect(screen, iceCol, [25, 81, 94, 175], 0)
+    ice = pygame.draw.rect(screen, iceCol, [25, 51, 94, 235], 0)
     terrain.append(ice)
     terFric.append(iceFric)
 
-    ice2 = pygame.draw.rect(screen, iceCol, [275, 75, 150, 100], 0)
+    ice2 = pygame.draw.rect(screen, iceCol, [200, 75, 250, 100], 0)
     terrain.append(ice2)
     terFric.append(iceFric)
 
-    ice3 = pygame.draw.rect(screen, iceCol, [300, 300, 125, 100])
+    ice3 = pygame.draw.rect(screen, iceCol, [325, 225, 100, 225])
     terrain.append(ice3)
     terFric.append(iceFric)
    
@@ -827,8 +827,18 @@ def level7():
     width = 6
     
     # Ground
-    
+    grass = pygame.draw.rect(screen, grassCol, [75, 75, 350, 350])
+    terrain.append(grass)
+    terFric.append(grassFric)
+
     # Border Walls
+    top = pygame.draw.rect(screen, borderCol, [69, 69, 362, width])
+    Yobj.append(top)
+    YBounce.append(borBounce)
+
+    bot = pygame.draw.rect(screen, borderCol, [69, 425, 362, width])
+    Yobj.append(bot)
+    YBounce.append(borBounce)
 
     # 2D array containging vertical and horizontal rectangles lists
     if len(levelRects) <= level-1:
@@ -849,7 +859,7 @@ def level7():
     screen.blit(text, (10, 0))
 
     # Place hole on screen
-    holerect.update((70, 112), (30, 30))
+    holerect.update((239, 239), (30, 30))
     screen.blit(hole, holerect)
 
     # Start position for the ball
@@ -1161,10 +1171,11 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
+    # Update display
     pygame.display.update()
     clock.tick(FPS)
     pygame.display.flip()
-    #levelMethods[level-1]()
 
     # Home screen
     if level == 0:
@@ -1173,7 +1184,7 @@ while running:
             mousePos = [event.pos[0], event.pos[1]]
         # Plays game when you hit Play
         elif event.type == pygame.MOUSEBUTTONUP and buttons[0].collidepoint(mousePos[0], mousePos[1]):
-            level = 1
+            level = 7
             load = True 
 
         # Goes to color chooser if you hit Ball
