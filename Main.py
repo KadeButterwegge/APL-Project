@@ -831,6 +831,18 @@ def level7():
     terrain.append(grass)
     terFric.append(grassFric)
 
+    boost = pygame.draw.rect(screen, boostCol, [125, 125, 250, 250])
+    terrain.append(boost)
+    terFric.append(boostFric)
+
+    ice = pygame.draw.rect(screen, iceCol, [175, 175, 150, 150])
+    terrain.append(ice)
+    terFric.append(iceFric)
+
+    slow = pygame.draw.rect(screen, slowCol, [225, 225, 50, 50])
+    terrain.append(slow)
+    terFric.append(slowFric)
+
     # Border Walls
     top = pygame.draw.rect(screen, borderCol, [69, 69, 362, width])
     Yobj.append(top)
@@ -839,6 +851,14 @@ def level7():
     bot = pygame.draw.rect(screen, borderCol, [69, 425, 362, width])
     Yobj.append(bot)
     YBounce.append(borBounce)
+
+    left = pygame.draw.rect(screen, borderCol, [69, 69, width, 362])
+    Xobj.append(left)
+    XBounce.append(borBounce)
+
+    right = pygame.draw.rect(screen, borderCol, [425, 69, width, 362])
+    Xobj.append(right)
+    XBounce.append(borBounce)
 
     # 2D array containging vertical and horizontal rectangles lists
     if len(levelRects) <= level-1:
