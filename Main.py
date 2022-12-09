@@ -827,38 +827,37 @@ def level7():
     width = 6
     
     # Ground
-    grass = pygame.draw.rect(screen, grassCol, [75, 75, 350, 350])
-    terrain.append(grass)
+    grass1 = pygame.draw.rect(screen, grassCol, [25, 375, 75, 80])
+    terrain.append(grass1)
     terFric.append(grassFric)
 
-    boost = pygame.draw.rect(screen, boostCol, [125, 125, 250, 250])
-    terrain.append(boost)
-    terFric.append(boostFric)
+    grass2 = pygame.draw.rect(screen, grassCol, [50, 405, 400, 20])
+    terrain.append(grass2)
+    terFric.append(grassFric)
 
-    ice = pygame.draw.rect(screen, iceCol, [175, 175, 150, 150])
-    terrain.append(ice)
+    ice1 = pygame.draw.rect(screen, iceCol, [100, 405, 300, 20])
+    terrain.append(ice1)
     terFric.append(iceFric)
 
-    slow = pygame.draw.rect(screen, slowCol, [225, 225, 50, 50])
-    terrain.append(slow)
+    slow1 = pygame.draw.rect(screen, slowCol, [400, 375, 75, 80])
+    terrain.append(slow1)
     terFric.append(slowFric)
 
-    # Border Walls
-    top = pygame.draw.rect(screen, borderCol, [69, 69, 362, width])
-    Yobj.append(top)
-    YBounce.append(borBounce)
+    slow2 = pygame.draw.rect(screen, slowCol, [400, 30, 75, 80])
+    terrain.append(slow2)
+    terFric.append(slowFric)
 
-    bot = pygame.draw.rect(screen, borderCol, [69, 425, 362, width])
-    Yobj.append(bot)
-    YBounce.append(borBounce)
+    slow3 = pygame.draw.rect(screen, slowCol, [25, 30, 75, 80])
+    terrain.append(slow3)
+    terFric.append(slowFric)
 
-    left = pygame.draw.rect(screen, borderCol, [69, 69, width, 362])
-    Xobj.append(left)
-    XBounce.append(borBounce)
+    boost1 = pygame.draw.rect(screen, boostCol, [400, 375, 75, 20])
+    terrain.append(boost1)
+    terFric.append(slowFric)
 
-    right = pygame.draw.rect(screen, borderCol, [425, 69, width, 362])
-    Xobj.append(right)
-    XBounce.append(borBounce)
+
+
+    # Walss
 
     # 2D array containging vertical and horizontal rectangles lists
     if len(levelRects) <= level-1:
@@ -873,7 +872,11 @@ def level7():
         level9Rects.append(tpcords)
         levelRects.append(level9Rects)
     
-    # Stroke counter
+    # Stroke counter background
+    pygame.draw.rect(screen, Black, [0, 0, 150, 25])
+    pygame.draw.rect(screen, White, [0, 0, 150, 25], 4)
+
+    # Stroke counter    
     font = pygame.font.SysFont('arial', 20)
     text = font.render(str("Level " + str(level) + " Strokes: " + str(strokes)), True, (255, 255, 255))
     screen.blit(text, (10, 0))
@@ -884,7 +887,7 @@ def level7():
 
     # Start position for the ball
     if setPos:
-        ballrect.update((73, 370), (14, 14))
+        ballrect.update((43, 408), (14, 14))
         setPos = False
     screen.blit(ball, ballrect)
 
