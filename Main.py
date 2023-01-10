@@ -1401,7 +1401,7 @@ while running:
                     xspeed = 0
                     yspeed = 0
                     setPos = True
-                    if level < len(levelMethods):
+                    if level < len(levelMethods)+1:
                         # Update stroke count
                         levelStrokes[level-1] = strokes
                         totalStrokes += strokes
