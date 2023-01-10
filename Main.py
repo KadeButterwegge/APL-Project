@@ -834,11 +834,18 @@ def level7():
     terrain.append(boost)
     terFric.append(boostFric)
 
-    slow = pygame.draw.rect(screen, slowCol, [440, 230, 40, 40])
+    slow = pygame.draw.rect(screen, slowCol, [400, 230, 80, 40])
     terrain.append(slow)
     terFric.append(slowFric)
 
+    grass = pygame.draw.rect(screen, grassCol, [25, 230, 40, 40])
+    terrain.append(grass)
+    terFric.append(grassFric)
+
     # Walls
+    right = pygame.draw.rect(screen, borderCol, [480, 230, width, 40])
+    Xobj.append(right)
+    XBounce.append(borBounce)
 
     # 2D array containging vertical and horizontal rectangles lists
     if len(levelRects) <= level-1:
@@ -868,7 +875,7 @@ def level7():
 
     # Start position for the ball
     if setPos:
-        ballrect.update((30, 243), (14, 14))
+        ballrect.update((38, 243), (14, 14))
         setPos = False
     screen.blit(ball, ballrect)
 
@@ -1230,7 +1237,7 @@ while running:
             mousePos = [event.pos[0], event.pos[1]]
         # Plays game when you hit Play
         elif event.type == pygame.MOUSEBUTTONUP and buttons[0].collidepoint(mousePos[0], mousePos[1]):
-            level = 9
+            level = 7
             load = True 
 
         # Goes to color chooser if you hit Ball
