@@ -827,37 +827,15 @@ def level7():
     width = 6
     
     # Ground
-    grass1 = pygame.draw.rect(screen, grassCol, [25, 375, 75, 80])
-    terrain.append(grass1)
-    terFric.append(grassFric)
+    boost = pygame.draw.rect(screen, boostCol, [25, 240, 450, 20])
+    terrain.append(boost)
+    terFric.append(boostFric)
 
-    grass2 = pygame.draw.rect(screen, grassCol, [50, 405, 400, 20])
-    terrain.append(grass2)
-    terFric.append(grassFric)
-
-    ice1 = pygame.draw.rect(screen, iceCol, [100, 405, 300, 20])
-    terrain.append(ice1)
-    terFric.append(iceFric)
-
-    slow1 = pygame.draw.rect(screen, slowCol, [400, 375, 75, 80])
-    terrain.append(slow1)
+    slow = pygame.draw.rect(screen, slowCol, [440, 230, 40, 40])
+    terrain.append(slow)
     terFric.append(slowFric)
 
-    slow2 = pygame.draw.rect(screen, slowCol, [400, 30, 75, 80])
-    terrain.append(slow2)
-    terFric.append(slowFric)
-
-    slow3 = pygame.draw.rect(screen, slowCol, [25, 30, 75, 80])
-    terrain.append(slow3)
-    terFric.append(slowFric)
-
-    boost1 = pygame.draw.rect(screen, boostCol, [400, 375, 75, 20])
-    terrain.append(boost1)
-    terFric.append(slowFric)
-
-
-
-    # Walss
+    # Walls
 
     # 2D array containging vertical and horizontal rectangles lists
     if len(levelRects) <= level-1:
@@ -882,12 +860,12 @@ def level7():
     screen.blit(text, (10, 0))
 
     # Place hole on screen
-    holerect.update((239, 239), (30, 30))
+    holerect.update((449.5, 239.5), (30, 30))
     screen.blit(hole, holerect)
 
     # Start position for the ball
     if setPos:
-        ballrect.update((43, 408), (14, 14))
+        ballrect.update((30, 243), (14, 14))
         setPos = False
     screen.blit(ball, ballrect)
 
@@ -1207,7 +1185,7 @@ while running:
             mousePos = [event.pos[0], event.pos[1]]
         # Plays game when you hit Play
         elif event.type == pygame.MOUSEBUTTONUP and buttons[0].collidepoint(mousePos[0], mousePos[1]):
-            level = 7
+            level = 1
             load = True 
 
         # Goes to color chooser if you hit Ball
