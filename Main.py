@@ -37,6 +37,9 @@ pygame.display.set_icon(icon)
 buttons = []
 colorButtons = []
 
+#Win screen setup
+winButton = []
+
 #Level layouts
 load = False
 loaded = False
@@ -831,18 +834,11 @@ def level7():
     terrain.append(boost)
     terFric.append(boostFric)
 
-    slow = pygame.draw.rect(screen, slowCol, [400, 230, 80, 40])
+    slow = pygame.draw.rect(screen, slowCol, [440, 230, 40, 40])
     terrain.append(slow)
     terFric.append(slowFric)
 
-    grass = pygame.draw.rect(screen, grassCol, [25, 230, 40, 40])
-    terrain.append(grass)
-    terFric.append(grassFric)
-
     # Walls
-    right = pygame.draw.rect(screen, borderCol, [480, 230, width, 40])
-    Xobj.append(right)
-    XBounce.append(borBounce)
 
     # 2D array containging vertical and horizontal rectangles lists
     if len(levelRects) <= level-1:
@@ -872,7 +868,7 @@ def level7():
 
     # Start position for the ball
     if setPos:
-        ballrect.update((38, 243), (14, 14))
+        ballrect.update((30, 243), (14, 14))
         setPos = False
     screen.blit(ball, ballrect)
 
@@ -1161,6 +1157,48 @@ def loadLevels():
     level9()
     setPos = True
 
+def winScreen():
+    global winButton
+
+    # Background color
+    screen.fill((0, 0, 155))
+
+    # Setup Text
+    font = pygame.font.SysFont('arial', 50)
+    text = font.render(str("Victory!"), True, (255, 255, 255))
+
+    # Victory banner
+    pygame.draw.rect(screen, Black, [155, 50, 190, 75])
+    pygame.draw.rect(screen, White, [155, 50, 190, 75], 4)
+    screen.blit(text, (185, 58))
+
+    # Setup text for next banner
+    font = pygame.font.SysFont('arial', 20)
+    text = font.render(str("You completed the game in " + str(levelStrokes[9]) + " strokes!"), True, (255, 255, 255))
+
+    # Second victory banner
+    pygame.draw.rect(screen, Black, [100, 150, 300, 50])
+    pygame.draw.rect(screen, White, [100, 150, 300, 50], 4)
+    screen.blit(text, (113, 162))
+
+    # Setup text for thank you banner
+    font = pygame.font.SysFont('arial', 30)
+    text = font.render(str("Thanks for playing!"), True, (255, 255, 255))
+
+    # Thank you banner
+    pygame.draw.rect(screen, Black, [130, 225, 240, 55])
+    pygame.draw.rect(screen, White, [130, 225, 240, 55], 4)
+    screen.blit(text, (145, 233))
+
+    # Setup text for home button
+    font = pygame.font.SysFont('arial', 30)
+    text = font.render(str("Home"), True, (255, 255, 255))
+
+    # Home button
+    pygame.draw.rect(screen, Black, [202, 305, 96, 55])
+    winButton.append(pygame.draw.rect(screen, White, [202, 305, 96, 55], 4))
+    screen.blit(text, (217, 313))
+
 
 # Add all levels to a list
 levelMethods.append(level1)
@@ -1192,11 +1230,7 @@ while running:
             mousePos = [event.pos[0], event.pos[1]]
         # Plays game when you hit Play
         elif event.type == pygame.MOUSEBUTTONUP and buttons[0].collidepoint(mousePos[0], mousePos[1]):
-<<<<<<< HEAD
-            level = 1
-=======
-            level = 6
->>>>>>> c67dab362ef839310f5d79753dccb5546f3cd886
+            level = 9
             load = True 
 
         # Goes to color chooser if you hit Ball
@@ -1228,7 +1262,6 @@ while running:
                         ball = pygame.transform.scale(ball, (14, 14))
                         ballrect = ball.get_rect()
                         currentColor = ballColors[colorButtons.index(rect)]
-<<<<<<< HEAD
     # Win screen
     if level == 10:
         # Save mouse position on click
@@ -1239,16 +1272,12 @@ while running:
             # Sends to home if you click home button
             if winButton[0].collidepoint(mousePos[0], mousePos[1]):
                 level = 0
-
-=======
                         
-                        
->>>>>>> c67dab362ef839310f5d79753dccb5546f3cd886
     if load == True:
         loadLevels()
         load = False
         loaded = True
-    if loaded == True:
+    if loaded == True and level > 0 and level < 10:
         levelMethods[level-1]()
         
     try:
@@ -1382,9 +1411,10 @@ while running:
                         strokes = 0
 
                         # Go to next Level
-                        if level < 9:
+                        if level < 10:
                             level += 1
-                        elif level == 9:
+                            print(level)
+                        elif level == 11:
                             level = 0
 
                         # Display scoreboard
