@@ -37,6 +37,9 @@ pygame.display.set_icon(icon)
 buttons = []
 colorButtons = []
 
+#Win screen setup
+winButton = []
+
 #Level layouts
 load = False
 loaded = False
@@ -1154,6 +1157,48 @@ def loadLevels():
     level9()
     setPos = True
 
+def winScreen():
+    global winButton
+
+    # Background color
+    screen.fill((0, 0, 155))
+
+    # Setup Text
+    font = pygame.font.SysFont('arial', 50)
+    text = font.render(str("Victory!"), True, (255, 255, 255))
+
+    # Victory banner
+    pygame.draw.rect(screen, Black, [155, 50, 190, 75])
+    pygame.draw.rect(screen, White, [155, 50, 190, 75], 4)
+    screen.blit(text, (185, 58))
+
+    # Setup text for next banner
+    font = pygame.font.SysFont('arial', 20)
+    text = font.render(str("You completed the game in " + str(levelStrokes[9]) + " strokes!"), True, (255, 255, 255))
+
+    # Second victory banner
+    pygame.draw.rect(screen, Black, [100, 150, 300, 50])
+    pygame.draw.rect(screen, White, [100, 150, 300, 50], 4)
+    screen.blit(text, (113, 162))
+
+    # Setup text for thank you banner
+    font = pygame.font.SysFont('arial', 30)
+    text = font.render(str("Thanks for playing!"), True, (255, 255, 255))
+
+    # Thank you banner
+    pygame.draw.rect(screen, Black, [130, 225, 240, 55])
+    pygame.draw.rect(screen, White, [130, 225, 240, 55], 4)
+    screen.blit(text, (145, 233))
+
+    # Setup text for home button
+    font = pygame.font.SysFont('arial', 30)
+    text = font.render(str("Home"), True, (255, 255, 255))
+
+    # Home button
+    pygame.draw.rect(screen, Black, [202, 305, 96, 55])
+    winButton.append(pygame.draw.rect(screen, White, [202, 305, 96, 55], 4))
+    screen.blit(text, (217, 313))
+
 
 # Add all levels to a list
 levelMethods.append(level1)
@@ -1185,7 +1230,7 @@ while running:
             mousePos = [event.pos[0], event.pos[1]]
         # Plays game when you hit Play
         elif event.type == pygame.MOUSEBUTTONUP and buttons[0].collidepoint(mousePos[0], mousePos[1]):
-            level = 1
+            level = 10
             load = True 
 
         # Goes to color chooser if you hit Ball
@@ -1217,13 +1262,22 @@ while running:
                         ball = pygame.transform.scale(ball, (14, 14))
                         ballrect = ball.get_rect()
                         currentColor = ballColors[colorButtons.index(rect)]
-                        
+    # Win screen
+    if level == 10:
+        # Save mouse position on click
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mousePos = [event.pos[0], event.pos[1]]
+        winScreen()
+        if event.type == pygame.MOUSEBUTTONUP:
+            # Sends to home if you click home button
+            if winButton[0].collidepoint(mousePos[0], mousePos[1]):
+                level = 0
                         
     if load == True:
         loadLevels()
         load = False
         loaded = True
-    if loaded == True:
+    if loaded == True and level > 0 and level < 10:
         levelMethods[level-1]()
         
     try:
