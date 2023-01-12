@@ -1022,7 +1022,7 @@ def level9():
     terrain.append(slow)
     terFric.append(slowFric)
 
-    slow2 = pygame.draw.rect(screen, slowCol, [220, 75, 60, 60])
+    slow2 = pygame.draw.rect(screen, slowCol, [200, 55, 100, 100])
     terrain.append(slow2)
     terFric.append(slowFric)
 
@@ -1237,7 +1237,7 @@ while running:
             mousePos = [event.pos[0], event.pos[1]]
         # Plays game when you hit Play
         elif event.type == pygame.MOUSEBUTTONUP and buttons[0].collidepoint(mousePos[0], mousePos[1]):
-            level = 7
+            level = 9
             load = True 
 
         # Goes to color chooser if you hit Ball
