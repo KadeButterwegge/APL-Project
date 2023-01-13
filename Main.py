@@ -7,12 +7,12 @@ import numpy as np
 from PIL import Image
 pygame.init()
 
-#Make Screen
+# Make Screen
 screen = pygame.display.set_mode([500, 500])
 clock = pygame.time.Clock()
 FPS = 50
 
-#Make ball
+# Make ball
 ball = pygame.image.load("ball.png")
 ball = pygame.transform.scale(ball, (14, 14))
 ballrect = ball.get_rect()
