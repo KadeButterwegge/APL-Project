@@ -1237,7 +1237,7 @@ while running:
             mousePos = [event.pos[0], event.pos[1]]
         # Plays game when you hit Play
         elif event.type == pygame.MOUSEBUTTONUP and buttons[0].collidepoint(mousePos[0], mousePos[1]):
-            level = 7
+            level = 9
             load = True 
 
         # Goes to color chooser if you hit Ball
