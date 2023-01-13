@@ -216,93 +216,6 @@ def level1():
     # Start position for the ball
     screen.blit(ball, ballrect)
 
-def level2():
-    global levelRects
-    global setPos
-    screen.fill((0, 0, 150))
-    #Ball starting position
-
-    # Lists for horizontal and vertical rectangles
-    Xobj = []
-    Yobj = []
-    terrain = []
-    terFric = []
-
-    # Ground
-    grass = pygame.draw.rect(screen, grassCol, [50, 25, 400, 180])
-    terrain.append(grass)
-    terFric.append(grassFric)
-
-    grass2 = pygame.draw.rect(screen, grassCol, [188, 175, 133, 300])
-    terrain.append(grass2)
-    terFric.append(grassFric)
-
-    water = pygame.draw.rect(screen, (0, 0, 150), [130, 80, 245, 70], 0)
-
-    # Width for the border
-    width = 6
-
-    # Border rectangles
-    top_wall = pygame.draw.rect(screen, borderCol, [50, 25, 400, width], 0)
-    Yobj.append(top_wall)
-
-    top_left = pygame.draw.rect(screen, borderCol, [50, 25, width, 180], 0)
-    Xobj.append(top_left)
-
-    mid_left = pygame.draw.rect(screen, borderCol, [50, 205, 138, width], 0)
-    Yobj.append(mid_left)
-
-    top_right = pygame.draw.rect(screen, borderCol, [450, 25, width, 180], 0)
-    Xobj.append(top_right)
-
-    mid_right = pygame.draw.rect(screen, borderCol, [326, 205, 130, width], 0)
-    Yobj.append(mid_right)
-
-    bot_left = pygame.draw.rect(screen, borderCol, [188, 205, width, 270], 0)
-    Xobj.append(bot_left)
-
-    bot_right = pygame.draw.rect(screen, borderCol, [321, 205, width, 270], 0)
-    Xobj.append(bot_right)
-
-    bot_wall = pygame.draw.rect(screen, borderCol, [188, 475, 139, width], 0)
-    Yobj.append(bot_wall)
-
-    top_obs = pygame.draw.rect(screen, borderCol, [125, 75, 250, width], 0)
-    Yobj.append(top_obs)
-
-    bot_obs = pygame.draw.rect(screen, borderCol, [125, 150, 250, width], 0)
-    Yobj.append(bot_obs)
-
-    left_obs = pygame.draw.rect(screen, borderCol, [125, 75, width, 75], 0)
-    Xobj.append(left_obs)
-    
-    right_obs = pygame.draw.rect(screen, borderCol, [375, 75, width, 81], 0)
-    Xobj.append(right_obs)
-
-    # 2D array containging vertical and horizontal rectangles lists
-    if len(levelRects) <= level-1:
-        level2Rects = []
-        level2Rects.append(Xobj)
-        level2Rects.append(Yobj)
-        level2Rects.append(terrain)
-        level2Rects.append(terFric)
-        levelRects.append(level2Rects)
-    
-    # Stroke counter
-    font = pygame.font.SysFont('arial', 20)
-    text = font.render(str("Level " + str(level) + " Strokes: " + str(strokes)), True, (255, 255, 255))
-    screen.blit(text, (10, 0))
-
-    # Place hole on screen
-    holerect.update((250, 40), (30, 30))
-    screen.blit(hole, holerect)
-
-    # Start position for the ball
-    if setPos:
-        ballrect.update((250, 400), (14, 14))
-        setPos = False
-    screen.blit(ball, ballrect)
-
 def level3():
     global levelRects
     global setPos
@@ -468,7 +381,7 @@ def level4():
 
     midTL = pygame.draw.rect(screen, borderCol, [125, 175, 200, width])
     Yobj.append(midTL)
-    XBounce.append(borBounce)
+    YBounce.append(borBounce)
 
     midTR = pygame.draw.rect(screen, borderCol, [425, 175, 50, width])
     Yobj.append(midTR)
@@ -810,185 +723,6 @@ def level6():
         setPos = False
     screen.blit(ball, ballrect)
 
-def level7():
-    global levelRects
-    global setPos
-    screen.fill((0, 0, 150))
-    #Ball starting position
-
-    # Lists for horizontal and vertical rectangles
-    Xobj = []
-    Yobj = []
-    XBounce = []
-    YBounce = []
-    terrain = []
-    terFric = []
-    tprects = []
-    tpcords = []
-
-    # Width for the border
-    width = 6
-    
-    # Ground
-    boost = pygame.draw.rect(screen, boostCol, [25, 240, 450, 20])
-    terrain.append(boost)
-    terFric.append(boostFric)
-
-    slow = pygame.draw.rect(screen, slowCol, [400, 230, 80, 40])
-    terrain.append(slow)
-    terFric.append(slowFric)
-
-    grass = pygame.draw.rect(screen, grassCol, [25, 230, 40, 40])
-    terrain.append(grass)
-    terFric.append(grassFric)
-
-    # Walls
-    right = pygame.draw.rect(screen, borderCol, [480, 230, width, 40])
-    Xobj.append(right)
-    XBounce.append(borBounce)
-
-    # 2D array containging vertical and horizontal rectangles lists
-    if len(levelRects) <= level-1:
-        level9Rects = []
-        level9Rects.append(Xobj)
-        level9Rects.append(Yobj)
-        level9Rects.append(terrain)
-        level9Rects.append(terFric)
-        level9Rects.append(XBounce)
-        level9Rects.append(YBounce)
-        level9Rects.append(tprects)
-        level9Rects.append(tpcords)
-        levelRects.append(level9Rects)
-    
-    # Stroke counter background
-    pygame.draw.rect(screen, Black, [0, 0, 150, 25])
-    pygame.draw.rect(screen, White, [0, 0, 150, 25], 4)
-
-    # Stroke counter    
-    font = pygame.font.SysFont('arial', 20)
-    text = font.render(str("Level " + str(level) + " Strokes: " + str(strokes)), True, (255, 255, 255))
-    screen.blit(text, (10, 0))
-
-    # Place hole on screen
-    holerect.update((449.5, 239.5), (30, 30))
-    screen.blit(hole, holerect)
-
-    # Start position for the ball
-    if setPos:
-        ballrect.update((38, 243), (14, 14))
-        setPos = False
-    screen.blit(ball, ballrect)
-
-def level8():
-    global levelRects
-    global setPos
-    global level8Terrain
-    global level8Rects
-    global level8Speeds
-    screen.fill((0, 0, 150))
-
-    # Lists for horizontal and vertical rectangles
-    Xobj = []
-    Yobj = []
-    XBounce = []
-    YBounce = []
-    terrain = []
-    terFric = []
-    tprects = []
-    tpcords = []
-
-    # Width for the border
-    width = 6
-    
-    # Keeps moving rectangles within the border
-    if level8Speeds[0] < 100 or level8Speeds[0] > 300:
-        level8Speeds[1] = -level8Speeds[1]
-    if level8Speeds[2] < 100 or level8Speeds[2] > 300:
-        level8Speeds[3] = -level8Speeds[3]
-
-    level8Speeds[0] = level8Speeds[0] + level8Speeds[1]
-    level8Speeds[2] = level8Speeds[2] + level8Speeds[3]
-
-    # Ground
-    hiddenRect = pygame.draw.rect(screen, (0, 0, 150), [100, 50, 300, 400])
-    level8Terrain.append(hiddenRect)
-    terFric.append(grassFric)
-
-    hidden2 = pygame.draw.rect(screen, (0, 0, 150), [100, 175, 300, 150])
-    level8Terrain.append(hidden2)
-    terFric.append(grassFric)
-
-    level8Terrain[0] = pygame.draw.rect(screen, boostCol, [level8Speeds[0], 175, 100, 75])
-    terFric.append(boostFric)
-
-    level8Terrain[1] = pygame.draw.rect(screen, boostCol, [level8Speeds[2], 250, 100, 75])
-    terFric.append(boostFric)
-
-    grass1 = pygame.draw.rect(screen, grassCol, [100, 50, 300, 125])
-    level8Terrain.append(grass1)
-    terFric.append(grassFric)
-
-    grass2 = pygame.draw.rect(screen, grassCol, [100, 325, 300, 125])
-    level8Terrain.append(grass2)
-    terFric.append(grassFric)
-    
-    
-    # Border Walls
-    top = pygame.draw.rect(screen, borderCol, [94, 44, 312, width])
-    Yobj.append(top)
-    YBounce.append(borBounce)
-
-    bot = pygame.draw.rect(screen, borderCol, [94, 450, 312, width])
-    Yobj.append(bot)
-    YBounce.append(borBounce)
-
-    left = pygame.draw.rect(screen, borderCol, [94, 44, width, 412])
-    Xobj.append(left)
-    XBounce.append(borBounce)
-
-    right = pygame.draw.rect(screen, borderCol, [400, 44, width, 412])
-    Xobj.append(right)
-    XBounce.append(borBounce)
-
-    midL = pygame.draw.rect(screen, borderCol, [100, 169, 60, width])
-    Yobj.append(midL)
-    YBounce.append(borBounce)
-
-    mid = pygame.draw.rect(screen, borderCol, [210, 169, 80, width])
-    Yobj.append(mid)
-    YBounce.append(borBounce)
-
-    midR = pygame.draw.rect(screen, borderCol, [340, 169, 60, width])
-    Yobj.append(midR)
-    YBounce.append(borBounce)
-
-    # 2D array containging vertical and horizontal rectangles lists
-    if len(levelRects) <= level-1:
-        level8Rects[0] = Xobj
-        level8Rects[1] = Yobj
-        level8Rects[2] = level8Terrain
-        level8Rects[3] = terFric
-        level8Rects[4] = XBounce
-        level8Rects[5] = YBounce
-        level8Rects[6] = tprects
-        level8Rects[7] = tpcords
-        levelRects.append(level8Rects)
-    
-    # Stroke counter
-    font = pygame.font.SysFont('arial', 20)
-    text = font.render(str("Level " + str(level) + " Strokes: " + str(strokes)), True, (255, 255, 255))
-    screen.blit(text, (10, 0))
-
-    # Place hole on screen
-    holerect.update((239, 75), (30, 30))
-    screen.blit(hole, holerect)
-
-    # Start position for the ball
-    if setPos:
-        ballrect.update((243, 410), (14, 14))
-        setPos = False
-    screen.blit(ball, ballrect)
-
 def level9():
     global levelRects
     global setPos
@@ -1154,13 +888,10 @@ def scoreBoard():
     
 def loadLevels():
     level1()
-    level2()
     level3()
     level4()
     level5()
     level6()
-    level7()
-    level8()
     level9()
     setPos = True
 
@@ -1209,13 +940,10 @@ def winScreen():
 
 # Add all levels to a list
 levelMethods.append(level1)
-levelMethods.append(level2)
 levelMethods.append(level3)
 levelMethods.append(level4)
 levelMethods.append(level5)
 levelMethods.append(level6)
-levelMethods.append(level7)
-levelMethods.append(level8)
 levelMethods.append(level9)
 
 running = True
@@ -1237,7 +965,7 @@ while running:
             mousePos = [event.pos[0], event.pos[1]]
         # Plays game when you hit Play
         elif event.type == pygame.MOUSEBUTTONUP and buttons[0].collidepoint(mousePos[0], mousePos[1]):
-            level = 9
+            level = 6
             load = True 
 
         # Goes to color chooser if you hit Ball
@@ -1248,9 +976,11 @@ while running:
         colorChooser()
         time.sleep(0.05)
         if event.type == pygame.MOUSEBUTTONUP:
+            # Back button
             if colorButtons[8].collidepoint(event.pos[0], event.pos[1]):
                 level = 0
             if level == -1:
+                # Checks if user clicks on a color button
                 for rect in colorButtons:
                     if rect.collidepoint(event.pos[0], event.pos[1]):
                         im = Image.open('ball.png')
@@ -1270,7 +1000,7 @@ while running:
                         ballrect = ball.get_rect()
                         currentColor = ballColors[colorButtons.index(rect)]
     # Win screen
-    if level == 10:
+    if level == 7:
         # Save mouse position on click
         if event.type == pygame.MOUSEBUTTONDOWN:
             mousePos = [event.pos[0], event.pos[1]]
@@ -1279,12 +1009,13 @@ while running:
             # Sends to home if you click home button
             if winButton[0].collidepoint(mousePos[0], mousePos[1]):
                 level = 0
-                        
+
+    # Loads levels 
     if load == True:
         loadLevels()
         load = False
         loaded = True
-    if loaded == True and level > 0 and level < 10:
+    if loaded == True and level > 0 and level < 7:
         levelMethods[level-1]()
         
     try:
@@ -1307,7 +1038,7 @@ while running:
 
             #While loop to move ball
             while abs(xspeed) > 0 or abs(yspeed) > 0:
-
+                inMap = False
                 time.sleep(.016)
                 #Draw new ball position
                 screen.blit(ball, ballrect)
@@ -1318,15 +1049,12 @@ while running:
                 friction = 0.93
                 
                 # Teleport introduced in level 6
-                if level > 5:
+                if level > 4:
                     for rect in levelRects[level-1][6]:
                         if rect.contains(ballrect):
                             ballrect.update((levelRects[level-1][7][levelRects[level-1][6].index(rect)]), (14, 14))
                             xspeed = 0
                             yspeed = 0
-                
-                #Check for wall collisions
-                inMap = False
 
                 #Vertical rectangle collisions
                 for rectx in levelRects[level-1][0]:
@@ -1334,7 +1062,7 @@ while running:
                         xspeed = -xspeed
                         ballrect.move_ip(xspeed, 0)
                         # Changes friction, different frictions are introduced in level 3
-                        if level > 3:
+                        if level > 2:
                             xspeed *= levelRects[level-1][4][levelRects[level-1][0].index(rectx)]
 
                 #Horizontal rectangle collisions
@@ -1343,7 +1071,7 @@ while running:
                         yspeed = -yspeed
                         ballrect.move_ip(0, yspeed)
                         # Changes friction, different frictions are introduced in level 3
-                        if level > 3:
+                        if level > 2:
                             yspeed *= levelRects[level-1][5][levelRects[level-1][1].index(recty)]
 
                 #Determines friction, and makes sure ball is in map
@@ -1351,26 +1079,6 @@ while running:
                     if rect.contains(ballrect):
                         inMap = True
                         friction = levelRects[level-1][3][levelRects[level-1][2].index(rect)]
-                if level == 8:
-                    if levelRects[level-1][2][3].contains(ballrect) and levelRects[level-1][2][0].contains(ballrect) == False:
-                        if levelRects[level-1][2][3].contains(ballrect) and levelRects[level-1][2][1].contains(ballrect) == False:
-                            if ballrect.colliderect(levelRects[level-1][2][0]) and ballrect.colliderect(levelRects[level-1][2][0]):
-                                inMap = True
-                                ballrect.move_ip(level8Speeds[1], 0)
-                            else:
-                                inMap = False     
-                if level == 8:  
-                    if levelRects[level-1][2][0].contains(ballrect):
-                        inMap = True
-                        ballrect.move_ip(level8Speeds[1], 0)
-                        screen.blit(ball, ballrect)
-                        xspeed = 1
-                    elif levelRects[level-1][2][1].contains(ballrect):
-                        inMap = True
-                        ballrect.move_ip(level8Speeds[3], 0)
-                        screen.blit(ball, ballrect)
-                        xspeed = 1
-                                    
                 
                 # Teleport to prior position if ball goes outside of map
                 if inMap == False:
@@ -1421,20 +1129,16 @@ while running:
                         if level < 10:
                             level += 1
                             print(level)
-                        elif level == 11:
-                            level = 0
 
                         # Display scoreboard
                         scoreBoard()
                         pygame.display.update()
                         pygame.display.flip()
                         time.sleep(3)
-                        
-                        
-
                 elif holerect.contains(ballrect) and abs(xspeed) > 4 and abs(yspeed) > 4:
                     xspeed = random.randint(math.floor(-abs(xspeed)), math.floor(abs(xspeed)))
                     yspeed = random.randint(math.floor(-abs(yspeed)), math.floor(abs(yspeed)))
+
                 #Move the ball
                 ballrect.move_ip(xspeed, yspeed)
 
